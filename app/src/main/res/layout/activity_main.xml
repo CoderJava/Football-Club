@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Created by YSN Studio on 4/12/18 4:17 AM
+  ~ Copyright (c) 2018. All rights reserved.
+  ~
+  ~ Last modified 4/7/18 3:17 PM
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relative_layout_container_activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_navigation_view_activity_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        app:itemIconTint="@drawable/background_item_bottom_navigation_view"
+        app:itemTextColor="@drawable/background_item_bottom_navigation_view"
+        app:menu="@menu/navigation" />
+
+    <FrameLayout
+        android:id="@+id/frame_layout_activity_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_navigation_view_activity_main" />
+
+</RelativeLayout>

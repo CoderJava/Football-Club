@@ -1,8 +1,8 @@
 <!--
-  ~ Created by YSN Studio on 4/5/18 9:46 AM
+  ~ Created by YSN Studio on 4/12/18 4:17 AM
   ~ Copyright (c) 2018. All rights reserved.
   ~
-  ~ Last modified 4/5/18 9:35 AM
+  ~ Last modified 4/11/18 1:38 PM
   -->
 
 <resources>
@@ -15,4 +15,22 @@
     <string name="chelsea_detail">Didirikan pada tahun 1905 dan kini berkompetisi di Liga Utama Inggris. Kesuksesan pertama Chelsea diraih saat meraih gelar juara liga pada tahun 1955. Beberapa gelar dari berbagai kompetisi juga berhasil diraih pada dekade 1960an, 1970an, 1990an, dan 2000an.</string>
     <string name="acm_detail">Didirikan pada tahun 1899 dengan nama klub Kriket dan Sepak bola Milan oleh Alfred Edwards dan Herbert Klipin, seorang ekspatriat Inggris. Sebagai penghormatan terhadap asal usulnya, Milan tetap menggunakan ejaan bahasa Inggris nama kotanya (Milan) daripada menggunakan ejaan bahasa Italia Milano</string>
     <string name="arsenal_detail">Didirikan pada tahun 1886 dengan nama Dial Square. Klub ini bermain di Liga Utama Inggris yang termasuk salah satu klub tersukses di sepak bola Inggris, yang telah memenangkan 13 gelar kasta utama Liga Inggris (10 pada era Divis Pertama dan 3 pada era Premier League) dan 13 gelar di Piala FA (Gelar paling banyak)</string>
+    <string name="title_previous_match">Prev Match</string>
+    <string name="title_next_match">Next Match</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="vs">VS</string>
+    <string name="example_date_schedule">Sen, 05 Mar 2018</string>
+    <string name="goals">Goals</string>
+    <string name="_4_2_3_1">4-2-3-1</string>
+    <string name="n_a">N/A</string>
+    <string name="shots">Shots</string>
+    <string name="lineups">Lineups</string>
+    <string name="goal_keeper">Goal Keeper</string>
+    <string name="defense">Defense</string>
+    <string name="midfield">Midfield</string>
+    <string name="forward">Forward</string>
+    <string name="substitutes">Substitutes</string>
+    <string name="image_view_logo_club">Image view logo club</string>
 </resources>
