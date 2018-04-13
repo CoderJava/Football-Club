@@ -1,8 +1,8 @@
 /*
- * Created by YSN Studio on 4/12/18 4:17 AM
+ * Created by YSN Studio on 4/14/18 12:35 AM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/11/18 2:19 PM
+ * Last modified 4/14/18 12:32 AM
  */
 
 package com.ysn.footballclub_dicoding.detailmatch
@@ -44,84 +44,44 @@ class DetailMatchActivity : AppCompatActivity(), DetailMatchView {
         presenter.onLoadImageClub(idHomeTeam = idHomeTeam, idAwayTeam = idAwayTeam)
 
         // load data score
-        if (event.intHomeScore != null) {
-            text_view_home_score_activity_detail_match.text = event.intHomeScore
-        }
-        if (event.intAwayScore != null) {
-            text_view_away_score_activity_detail_match.text = event.intAwayScore
-        }
+        text_view_home_score_activity_detail_match.text = event.intHomeScore
+        text_view_away_score_activity_detail_match.text = event.intAwayScore
 
         // load data club name
-        if (event.strHomeTeam != null) {
-            text_view_home_club_name_activity_detail_match.text = event.strHomeTeam
-        }
-        if (event.strAwayTeam != null) {
-            text_view_away_club_name_activity_detail_match.text = event.strAwayTeam
-        }
+        text_view_home_club_name_activity_detail_match.text = event.strHomeTeam
+        text_view_away_club_name_activity_detail_match.text = event.strAwayTeam
 
         // load data formation
-        if (event.strHomeFormation != null) {
-            text_view_home_formation_activity_detail_match.text = event.strHomeFormation
-        }
-        if (event.strAwayFormation != null) {
-            text_view_away_formation_activity_detail_match.text = event.strAwayFormation
-        }
+        text_view_home_formation_activity_detail_match.text = event.strHomeFormation
+        text_view_away_formation_activity_detail_match.text = event.strAwayFormation
 
         // load data goals
-        if (event.strHomeGoalDetails != null) {
-            text_view_home_goal_activity_detail_match.text = event.strHomeGoalDetails.replace(";", "\n")
-        }
-        if (event.strAwayGoalDetails != null) {
-            text_view_away_goal_activity_detail_match.text = event.strAwayGoalDetails.replace(";", "\n")
-        }
+        text_view_home_goal_activity_detail_match.text = event.strHomeGoalDetails?.replace(";", "\n")
+        text_view_away_goal_activity_detail_match.text = event.strAwayGoalDetails?.replace(";", "\n")
 
         // load data shots
-        if (event.intHomeShots != null) {
-            text_view_home_shot_activity_detail_match.text = event.intHomeShots
-        }
-        if (event.intAwayShots != null) {
-            text_view_away_shot_activity_detail_match.text = event.intAwayShots
-        }
+        text_view_home_shot_activity_detail_match.text = event.intHomeShots
+        text_view_away_shot_activity_detail_match.text = event.intAwayShots
 
         // load data goalkeeper
-        if (event.strHomeLineupGoalkeeper != null) {
-            text_view_home_goalkeeper_activity_detail_match.text = event.strHomeLineupGoalkeeper.replace(";", "\n")
-        }
-        if (event.strAwayLineupGoalkeeper != null) {
-            text_view_away_goalkeeper_activity_detail_match.text = event.strAwayLineupGoalkeeper.replace(";", "\n")
-        }
+        text_view_home_goalkeeper_activity_detail_match.text = event.strHomeLineupGoalkeeper?.replace(";", "\n")
+        text_view_away_goalkeeper_activity_detail_match.text = event.strAwayLineupGoalkeeper?.replace(";", "\n")
 
         // load data defense
-        if (event.strHomeLineupDefense != null) {
-            text_view_home_defense_activity_detail_match.text = event.strHomeLineupDefense.replace(";", "\n")
-        }
-        if (event.strAwayLineupDefense != null) {
-            text_view_away_defense_activity_detail_match.text = event.strAwayLineupDefense.replace(";", "\n")
-        }
+        text_view_home_defense_activity_detail_match.text = event.strHomeLineupDefense?.replace(";", "\n")
+        text_view_away_defense_activity_detail_match.text = event.strAwayLineupDefense?.replace(";", "\n")
 
         // load data midfield
-        if (event.strHomeLineupMidfield != null) {
-            text_view_home_midfield_activity_detail_match.text = event.strHomeLineupMidfield.replace(";", "\n")
-        }
-        if (event.strAwayLineupMidfield != null) {
-            text_view_away_midfield_activity_detail_match.text = event.strAwayLineupMidfield.replace(";", "\n")
-        }
+        text_view_home_midfield_activity_detail_match.text = event.strHomeLineupMidfield?.replace(";", "\n")
+        text_view_away_midfield_activity_detail_match.text = event.strAwayLineupMidfield?.replace(";", "\n")
 
         // load data forward
-        if (event.strHomeLineupForward != null) {
-            text_view_home_forward_activity_detail_match.text = event.strHomeLineupForward.replace(";", "\n")
-        }
-        if (event.strAwayLineupForward != null) {
-            text_view_away_forward_activity_detail_match.text = event.strAwayLineupForward.replace(";", "\n")
-        }
+        text_view_home_forward_activity_detail_match.text = event.strHomeLineupForward?.replace(";", "\n")
+        text_view_away_forward_activity_detail_match.text = event.strAwayLineupForward?.replace(";", "\n")
 
         // load data substitute
-        if (event.strHomeLineupSubstitutes != null) {
-            text_view_home_substitute_activity_detail_match.text = event.strHomeLineupSubstitutes.replace(";", "\n")
-        }
-        if (event.strAwayLineupSubstitutes != null) {
-            text_view_away_substitute_activity_detail_match.text = event.strAwayLineupSubstitutes.replace(";", "\n")
-        }
+        text_view_home_substitute_activity_detail_match.text = event.strHomeLineupSubstitutes?.replace(";", "\n")
+        text_view_away_substitute_activity_detail_match.text = event.strAwayLineupSubstitutes?.replace(";", "\n")
         hideLoading()
     }
 

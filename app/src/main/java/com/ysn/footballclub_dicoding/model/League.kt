@@ -1,8 +1,8 @@
 /*
- * Created by YSN Studio on 4/12/18 4:17 AM
+ * Created by YSN Studio on 4/14/18 12:35 AM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/11/18 1:27 PM
+ * Last modified 4/14/18 12:32 AM
  */
 
 package com.ysn.footballclub_dicoding.model
@@ -25,32 +25,32 @@ data class Event(
         @SerializedName("strLeague") val strLeague: String,
         @SerializedName("strSeason") val strSeason: String,
         @SerializedName("strDescriptionEN") val strDescriptionEN: Any,
-        @SerializedName("strHomeTeam") val strHomeTeam: String,
-        @SerializedName("strAwayTeam") val strAwayTeam: String,
-        @SerializedName("intHomeScore") val intHomeScore: String,
+        @SerializedName("strHomeTeam") val strHomeTeam: String?,
+        @SerializedName("strAwayTeam") val strAwayTeam: String?,
+        @SerializedName("intHomeScore") val intHomeScore: String?,
         @SerializedName("intRound") val intRound: String,
-        @SerializedName("intAwayScore") val intAwayScore: String,
+        @SerializedName("intAwayScore") val intAwayScore: String?,
         @SerializedName("intSpectators") val intSpectators: Any,
-        @SerializedName("strHomeGoalDetails") val strHomeGoalDetails: String,
+        @SerializedName("strHomeGoalDetails") val strHomeGoalDetails: String?,
         @SerializedName("strHomeRedCards") val strHomeRedCards: Any,
         @SerializedName("strHomeYellowCards") val strHomeYellowCards: Any,
-        @SerializedName("strHomeLineupGoalkeeper") val strHomeLineupGoalkeeper: String,
-        @SerializedName("strHomeLineupDefense") val strHomeLineupDefense: String,
-        @SerializedName("strHomeLineupMidfield") val strHomeLineupMidfield: String,
-        @SerializedName("strHomeLineupForward") val strHomeLineupForward: String,
-        @SerializedName("strHomeLineupSubstitutes") val strHomeLineupSubstitutes: String,
-        @SerializedName("strHomeFormation") val strHomeFormation: String,
+        @SerializedName("strHomeLineupGoalkeeper") val strHomeLineupGoalkeeper: String?,
+        @SerializedName("strHomeLineupDefense") val strHomeLineupDefense: String?,
+        @SerializedName("strHomeLineupMidfield") val strHomeLineupMidfield: String?,
+        @SerializedName("strHomeLineupForward") val strHomeLineupForward: String?,
+        @SerializedName("strHomeLineupSubstitutes") val strHomeLineupSubstitutes: String?,
+        @SerializedName("strHomeFormation") val strHomeFormation: String?,
         @SerializedName("strAwayRedCards") val strAwayRedCards: Any,
         @SerializedName("strAwayYellowCards") val strAwayYellowCards: Any,
-        @SerializedName("strAwayGoalDetails") val strAwayGoalDetails: String,
-        @SerializedName("strAwayLineupGoalkeeper") val strAwayLineupGoalkeeper: String,
-        @SerializedName("strAwayLineupDefense") val strAwayLineupDefense: String,
-        @SerializedName("strAwayLineupMidfield") val strAwayLineupMidfield: String,
-        @SerializedName("strAwayLineupForward") val strAwayLineupForward: String,
-        @SerializedName("strAwayLineupSubstitutes") val strAwayLineupSubstitutes: String,
-        @SerializedName("strAwayFormation") val strAwayFormation: String,
-        @SerializedName("intHomeShots") val intHomeShots: String,
-        @SerializedName("intAwayShots") val intAwayShots: String,
+        @SerializedName("strAwayGoalDetails") val strAwayGoalDetails: String?,
+        @SerializedName("strAwayLineupGoalkeeper") val strAwayLineupGoalkeeper: String?,
+        @SerializedName("strAwayLineupDefense") val strAwayLineupDefense: String?,
+        @SerializedName("strAwayLineupMidfield") val strAwayLineupMidfield: String?,
+        @SerializedName("strAwayLineupForward") val strAwayLineupForward: String?,
+        @SerializedName("strAwayLineupSubstitutes") val strAwayLineupSubstitutes: String?,
+        @SerializedName("strAwayFormation") val strAwayFormation: String?,
+        @SerializedName("intHomeShots") val intHomeShots: String?,
+        @SerializedName("intAwayShots") val intAwayShots: String?,
         @SerializedName("dateEvent") val dateEvent: String,
         @SerializedName("strDate") val strDate: String,
         @SerializedName("strTime") val strTime: String,
