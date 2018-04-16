@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Created by YSN Studio on 4/12/18 4:17 AM
+  ~ Created by YSN Studio on 4/16/18 9:39 AM
   ~ Copyright (c) 2018. All rights reserved.
   ~
-  ~ Last modified 4/7/18 3:11 PM
+  ~ Last modified 4/15/18 8:36 AM
   -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
@@ -13,4 +13,8 @@
         android:id="@+id/navigation_next_match"
         android:icon="@drawable/ic_insert_invitation_black_24dp"
         android:title="@string/title_next_match" />
+    <item
+        android:id="@+id/navigation_favorite_match"
+        android:icon="@drawable/ic_stars_black_24dp"
+        android:title="@string/title_favorite_match" />
 </menu>

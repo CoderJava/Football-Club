@@ -1,8 +1,8 @@
 <!--
-  ~ Created by YSN Studio on 4/12/18 4:17 AM
+  ~ Created by YSN Studio on 4/16/18 9:39 AM
   ~ Copyright (c) 2018. All rights reserved.
   ~
-  ~ Last modified 4/11/18 1:38 PM
+  ~ Last modified 4/15/18 9:48 AM
   -->
 
 <resources>
@@ -33,4 +33,6 @@
     <string name="forward">Forward</string>
     <string name="substitutes">Substitutes</string>
     <string name="image_view_logo_club">Image view logo club</string>
+    <string name="title_favorite_match">Favorite</string>
+    <string name="add_favorite">Add Favorite</string>
 </resources>
