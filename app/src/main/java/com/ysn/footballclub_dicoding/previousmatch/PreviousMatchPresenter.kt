@@ -1,20 +1,24 @@
 /*
- * Created by YSN Studio on 4/12/18 4:17 AM
+ * Created by YSN Studio on 4/20/18 8:02 AM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/11/18 6:11 PM
+ * Last modified 4/20/18 8:01 AM
  */
 
 package com.ysn.footballclub_dicoding.previousmatch
 
+import com.google.gson.Gson
 import com.ysn.footballclub_dicoding.api.Endpoints
-import com.ysn.footballclub_dicoding.model.Event
 import com.ysn.footballclub_dicoding.detailmatch.adapter.AdapterMatch
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import com.ysn.footballclub_dicoding.model.Event
+import com.ysn.footballclub_dicoding.model.League
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.async
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.coroutines.experimental.bg
 
 class PreviousMatchPresenter constructor(private val view: PreviousMatchView?,
-                                         private val endpoints: Endpoints) {
+                                         private val endpoints: Endpoints) : AnkoLogger {
 
     private lateinit var adapterMatch: AdapterMatch
     private lateinit var events: List<Event>
@@ -26,42 +30,27 @@ class PreviousMatchPresenter constructor(private val view: PreviousMatchView?,
                 view?.onClickItemPreviousMatch(event = event)
             }
         })
-        endpoints.getEventPastLeague()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        {
-                            adapterMatch.refreshData(events = it.events as java.util.ArrayList<Event>)
-                            view?.loadData(adapterMatch = adapterMatch)
-                        },
-                        {
-                            it.printStackTrace()
-                            view?.loadDataFailed(message = it.message!!)
-                        },
-                        {
-                            /* nothing to do in here */
-                        }
-                )
+
+        async(UI) {
+            val dataApi = bg {
+                val response = endpoints.getEventPastLeague().execute()
+                Gson().fromJson<League>(response.body()?.string(), League::class.java)
+            }
+            adapterMatch.refreshData(events = dataApi.await()!!.events as java.util.ArrayList<Event>)
+            view?.loadData(adapterMatch = adapterMatch)
+        }
     }
 
     fun onRefreshData() {
         events = ArrayList()
-        endpoints.getEventPastLeague()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        {
-                            adapterMatch.refreshData(events = it.events as java.util.ArrayList<Event>)
-                            view?.refreshData()
-                        },
-                        {
-                            it.printStackTrace()
-                            view?.refreshDataFailed(message = it.message!!)
-                        },
-                        {
-                            /* nothing to do in here */
-                        }
-                )
+        async(UI) {
+            val dataApi = bg {
+                val response = endpoints.getEventPastLeague().execute()
+                Gson().fromJson<League>(response.body()?.string(), League::class.java)
+            }
+            adapterMatch.refreshData(events = dataApi.await()!!.events as java.util.ArrayList<Event>)
+            view?.refreshData()
+        }
     }
 
 }

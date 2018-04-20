@@ -1,17 +1,20 @@
 /*
- * Created by YSN Studio on 4/12/18 4:17 AM
+ * Created by YSN Studio on 4/20/18 8:02 AM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/11/18 6:11 PM
+ * Last modified 4/18/18 10:34 PM
  */
 
 package com.ysn.footballclub_dicoding.nextmatch
 
+import com.google.gson.Gson
 import com.ysn.footballclub_dicoding.api.Endpoints
 import com.ysn.footballclub_dicoding.detailmatch.adapter.AdapterMatch
 import com.ysn.footballclub_dicoding.model.Event
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import com.ysn.footballclub_dicoding.model.League
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.async
+import org.jetbrains.anko.coroutines.experimental.bg
 
 class NextMatchPresenter constructor(private val view: NextMatchView?,
                                      private val endpoints: Endpoints) {
@@ -26,42 +29,46 @@ class NextMatchPresenter constructor(private val view: NextMatchView?,
                 view?.onClickItemNextMatch(event = event)
             }
         })
-        endpoints.getEventNextLeague()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        {
-                            adapterMatch.refreshData(events = it.events as java.util.ArrayList<Event>)
-                            view?.loadData(adapterMatch = adapterMatch)
-                        },
-                        {
-                            it.printStackTrace()
-                            view?.loadDataFailed(message = it.message!!)
-                        },
-                        {
-                            /* nothing to do in here */
-                        }
-                )
+        async(UI) {
+            var responseMessage = ""
+            val dataApi = bg {
+                val response = endpoints.getEventNextLeague().execute()
+                responseMessage = response.message()
+                when (response.code()) {
+                    200 -> Gson().fromJson<League>(response.body()?.string(), League::class.java)
+                    else -> null
+                }
+            }
+            when (dataApi.await()) {
+                null -> view?.loadDataFailed(message = responseMessage)
+                else -> {
+                    adapterMatch.refreshData(events = dataApi.await()!!.events as java.util.ArrayList<Event>)
+                    view?.loadData(adapterMatch = adapterMatch)
+                }
+            }
+        }
     }
 
     fun onRefreshData() {
         events = ArrayList()
-        endpoints.getEventNextLeague()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        {
-                            adapterMatch.refreshData(events = it.events as java.util.ArrayList<Event>)
-                            view?.refreshData()
-                        },
-                        {
-                            it.printStackTrace()
-                            view?.refreshDataFailed(message = it.message!!)
-                        },
-                        {
-                            /* nothing to do in here */
-                        }
-                )
+        async(UI) {
+            var responseMessage = ""
+            val dataApi = bg {
+                val response = endpoints.getEventNextLeague().execute()
+                responseMessage = response.message()
+                when (response.code()) {
+                    200 -> Gson().fromJson(response.body()?.string(), League::class.java)
+                    else -> null
+                }
+            }
+            when (dataApi.await()) {
+                null -> view?.refreshDataFailed(message = responseMessage)
+                else -> {
+                    adapterMatch.refreshData(events = dataApi.await()!!.events as java.util.ArrayList<Event>)
+                    view?.refreshData()
+                }
+            }
+        }
     }
 
 }
