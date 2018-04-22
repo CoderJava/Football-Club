@@ -1,8 +1,8 @@
 /*
- * Created by YSN Studio on 4/16/18 9:39 AM
+ * Created by YSN Studio on 4/22/18 5:48 PM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/15/18 1:09 PM
+ * Last modified 4/22/18 10:58 AM
  */
 
 package com.ysn.footballclub_dicoding.detailmatch
@@ -13,21 +13,28 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import com.bumptech.glide.Glide
+import com.google.gson.Gson
 import com.ysn.footballclub_dicoding.R
-import com.ysn.footballclub_dicoding.db.DatabaseOpenHelper
+import com.ysn.footballclub_dicoding.api.ApiRepository
 import com.ysn.footballclub_dicoding.db.EntityEvent
+import com.ysn.footballclub_dicoding.db.database
 import com.ysn.footballclub_dicoding.model.Event
+import com.ysn.footballclub_dicoding.model.Team
+import com.ysn.footballclub_dicoding.model.Teams
 import kotlinx.android.synthetic.main.activity_detail_match.*
+import kotlinx.coroutines.experimental.Deferred
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
-import org.jetbrains.anko.longToast
+import org.jetbrains.anko.db.delete
+import org.jetbrains.anko.db.insert
+import org.jetbrains.anko.db.select
 import org.jetbrains.anko.toast
 
 class DetailMatchActivity : AppCompatActivity(), DetailMatchView, AnkoLogger {
 
     private lateinit var presenter: DetailMatchPresenter
-    private lateinit var database: DatabaseOpenHelper
     private lateinit var event: Event
+    private lateinit var apiRepository: ApiRepository
+    private lateinit var gson: Gson
     private lateinit var idHomeTeam: String
     private lateinit var idAwayTeam: String
     private lateinit var menu: Menu
@@ -38,13 +45,8 @@ class DetailMatchActivity : AppCompatActivity(), DetailMatchView, AnkoLogger {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_match)
         initPresenter()
-        initDatabase()
         initListeners()
         doLoadData()
-    }
-
-    private fun initDatabase() {
-        database = DatabaseOpenHelper.getInstance(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -69,9 +71,9 @@ class DetailMatchActivity : AppCompatActivity(), DetailMatchView, AnkoLogger {
         when (item.itemId) {
             R.id.menu_item_add_favorite_menu_detail_match -> {
                 if (isAlreadyDataInLocal) {
-                    presenter.onDeleteFavoriteMatch(database = database, event = event)
+                    deleteFavoriteMatch()
                 } else {
-                    presenter.onAddFavoriteMatch(database = database, event = event)
+                    addFavoriteMatch()
                 }
             }
             else -> {
@@ -79,6 +81,53 @@ class DetailMatchActivity : AppCompatActivity(), DetailMatchView, AnkoLogger {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun addFavoriteMatch() {
+        database.use {
+            insert(EntityEvent.TABLE_EVENT,
+                    EntityEvent.ID_EVENT to event.idEvent,
+                    EntityEvent.DATE_EVENT to event.dateEvent,
+                    EntityEvent.ID_HOME_TEAM to event.idHomeTeam,
+                    EntityEvent.ID_AWAY_TEAM to event.idAwayTeam,
+                    EntityEvent.INT_HOME_SCORE to event.intHomeScore,
+                    EntityEvent.INT_AWAY_SCORE to event.intAwayScore,
+                    EntityEvent.STR_HOME_TEAM to event.strHomeTeam,
+                    EntityEvent.STR_AWAY_TEAM to event.strAwayTeam,
+                    EntityEvent.STR_HOME_FORMATION to event.strHomeFormation,
+                    EntityEvent.STR_AWAY_FORMATION to event.strAwayFormation,
+                    EntityEvent.STR_HOME_GOAL_DETAILS to event.strHomeGoalDetails,
+                    EntityEvent.STR_AWAY_GOAL_DETAILS to event.strAwayGoalDetails,
+                    EntityEvent.INT_HOME_SHOTS to event.intHomeShots,
+                    EntityEvent.INT_AWAY_SHOTS to event.intAwayShots,
+                    EntityEvent.STR_HOME_LINEUP_GOAL_KEEPER to event.strHomeLineupGoalkeeper,
+                    EntityEvent.STR_AWAY_LINEUP_GOAL_KEEPER to event.strAwayLineupGoalkeeper,
+                    EntityEvent.STR_HOME_LINEUP_DEFENSE to event.strHomeLineupDefense,
+                    EntityEvent.STR_AWAY_LINEUP_DEFENSE to event.strAwayLineupDefense,
+                    EntityEvent.STR_HOME_LINEUP_MIDFIELD to event.strHomeLineupMidfield,
+                    EntityEvent.STR_AWAY_LINEUP_MIDFIELD to event.strAwayLineupMidfield,
+                    EntityEvent.STR_HOME_LINEUP_FORWARD to event.strHomeLineupForward,
+                    EntityEvent.STR_AWAY_LINEUP_FORWARD to event.strAwayLineupForward,
+                    EntityEvent.STR_HOME_LINEUP_SUBSTITUTES to event.strHomeLineupSubstitutes,
+                    EntityEvent.STR_AWAY_LINEUP_SUBSTITUTES to event.strAwayLineupSubstitutes
+            )
+            isAlreadyDataInLocal = true
+            menu.findItem(R.id.menu_item_add_favorite_menu_detail_match)
+                    .setIcon(R.drawable.ic_star_white_24dp)
+            toast("Match has been added to Favorite")
+        }
+    }
+
+    private fun deleteFavoriteMatch() {
+        database.use {
+            delete(EntityEvent.TABLE_EVENT,
+                    "(${EntityEvent.ID_EVENT} = {idEvent})",
+                    "idEvent" to event.idEvent)
+        }
+        isAlreadyDataInLocal = false
+        menu.findItem(R.id.menu_item_add_favorite_menu_detail_match)
+                .setIcon(R.drawable.ic_star_border_white_24dp)
+        toast("Match has been removed from Favorite")
     }
 
     private fun doLoadData() {
@@ -117,17 +166,18 @@ class DetailMatchActivity : AppCompatActivity(), DetailMatchView, AnkoLogger {
         }
         idHomeTeam = event.idHomeTeam
         idAwayTeam = event.idAwayTeam
-        presenter.onLoadData(database = database, idEvent = event.idEvent)
+        loadDataLocal(idEvent = event.idEvent)
     }
 
-    override fun loadData(count: Int) {
-        this.count = count
-        info { "count: $count" }
-        setupData()
-    }
-
-    override fun loadDataFailed(localizedMessage: String) {
-        longToast(localizedMessage)
+    private fun loadDataLocal(idEvent: String) {
+        database.use {
+            select(EntityEvent.TABLE_EVENT)
+                    .whereArgs("(${EntityEvent.ID_EVENT} = {idEvent})",
+                            "idEvent" to idEvent).exec {
+                        this@DetailMatchActivity.count = count
+                        setupData()
+                    }
+        }
     }
 
     private fun setupData() {
@@ -192,15 +242,17 @@ class DetailMatchActivity : AppCompatActivity(), DetailMatchView, AnkoLogger {
     }
 
     private fun initPresenter() {
-        presenter = DetailMatchPresenter(this)
+        gson = Gson()
+        apiRepository = ApiRepository()
+        presenter = DetailMatchPresenter(view = this, apiRepository = apiRepository, gson = gson)
     }
 
-    override fun loadImageClub(homeLogo: String, awayLogo: String) {
+    override fun loadImageClub(homeLogo: List<Team>, awayLogo: List<Team>) {
         Glide.with(this)
-                .load(homeLogo)
+                .load(homeLogo[0].strTeamBadge)
                 .into(image_view_home_activity_detail_match)
         Glide.with(this)
-                .load(awayLogo)
+                .load(awayLogo[0].strTeamBadge)
                 .into(image_view_away_activity_detail_match)
     }
 
@@ -208,25 +260,4 @@ class DetailMatchActivity : AppCompatActivity(), DetailMatchView, AnkoLogger {
         toast("Failed load image club")
     }
 
-    override fun addFavoriteMatch() {
-        toast("Match has been added to Favorite")
-        isAlreadyDataInLocal = true
-        menu.findItem(R.id.menu_item_add_favorite_menu_detail_match)
-                .setIcon(R.drawable.ic_star_white_24dp)
-    }
-
-    override fun addFavoriteMatchFailed(localizedMessage: String) {
-        longToast(localizedMessage)
-    }
-
-    override fun deleteFavoriteMatch() {
-        toast("Match has been removed from Favorite")
-        isAlreadyDataInLocal = false
-        menu.findItem(R.id.menu_item_add_favorite_menu_detail_match)
-                .setIcon(R.drawable.ic_star_border_white_24dp)
-    }
-
-    override fun deleteFavoriteMatchFailed(localizedMessage: String) {
-        longToast(localizedMessage)
-    }
 }

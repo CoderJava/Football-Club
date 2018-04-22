@@ -1,8 +1,8 @@
 /*
- * Created by YSN Studio on 4/12/18 4:17 AM
+ * Created by YSN Studio on 4/22/18 5:48 PM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/11/18 6:59 PM
+ * Last modified 4/22/18 11:18 AM
  */
 
 package com.ysn.footballclub_dicoding.nextmatch
@@ -17,9 +17,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.ysn.footballclub_dicoding.BuildConfig
+import com.google.gson.Gson
 import com.ysn.footballclub_dicoding.R
-import com.ysn.footballclub_dicoding.api.Endpoints
+import com.ysn.footballclub_dicoding.api.ApiRepository
 import com.ysn.footballclub_dicoding.detailmatch.DetailMatchActivity
 import com.ysn.footballclub_dicoding.detailmatch.adapter.AdapterMatch
 import com.ysn.footballclub_dicoding.model.Event
@@ -29,9 +29,7 @@ import org.jetbrains.anko.support.v4.UI
 import org.jetbrains.anko.support.v4.ctx
 import org.jetbrains.anko.support.v4.longToast
 import org.jetbrains.anko.support.v4.swipeRefreshLayout
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
+import java.util.*
 
 /**
  * A simple [Fragment] subclass.
@@ -42,7 +40,10 @@ class NextMatchFragment : Fragment(), NextMatchView {
     private lateinit var presenter: NextMatchPresenter
     private lateinit var recyclerView: RecyclerView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
-    private lateinit var endpoints: Endpoints
+    private lateinit var gson: Gson
+    private lateinit var apiRepository: ApiRepository
+    private lateinit var adapterMatch: AdapterMatch
+    private var isRefresh: Boolean = false
     private var isAlreadyLoadData: Boolean = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -59,7 +60,7 @@ class NextMatchFragment : Fragment(), NextMatchView {
                     )
 
                     recyclerView = recyclerView {
-                        id = R.id.recycler_view_previous_match_fragment
+                        id = R.id.recycler_view_next_match_fragment
                         backgroundColor = android.R.color.darker_gray
                         topPadding = dip(16)
                         rightPadding = dip(16)
@@ -77,25 +78,21 @@ class NextMatchFragment : Fragment(), NextMatchView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val retrofit = Retrofit.Builder()
-                .baseUrl(BuildConfig.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build()
-        endpoints = retrofit.create(Endpoints::class.java)
-        presenter = NextMatchPresenter(view = this, endpoints = endpoints)
+        gson = Gson()
+        apiRepository = ApiRepository()
+        presenter = NextMatchPresenter(view = this, gson = gson, apiRepository = apiRepository)
         if (savedInstanceState != null) {
             isAlreadyLoadData = savedInstanceState.getBoolean("isAlreadyLoadData")
             if (!isAlreadyLoadData) {
-                doLoadData()
+                doLoadData(isRefresh = false)
             }
         } else {
             if (!isAlreadyLoadData) {
-                doLoadData()
+                doLoadData(isRefresh = false)
             }
         }
         swipeRefreshLayout.setOnRefreshListener {
-            doRefreshData()
+            doLoadData(isRefresh = true)
         }
     }
 
@@ -104,12 +101,8 @@ class NextMatchFragment : Fragment(), NextMatchView {
         outState.putBoolean("isAlreadyLoadData", isAlreadyLoadData)
     }
 
-    private fun doRefreshData() {
-        recyclerView.invisible()
-        presenter.onRefreshData()
-    }
-
-    private fun doLoadData() {
+    private fun doLoadData(isRefresh: Boolean) {
+        this.isRefresh = isRefresh
         showLoading()
         recyclerView.invisible()
         presenter.onLoadData()
@@ -131,28 +124,25 @@ class NextMatchFragment : Fragment(), NextMatchView {
         visibility = View.INVISIBLE
     }
 
-    override fun loadData(adapterMatch: AdapterMatch) {
+    override fun loadData(events: List<Event>) {
         isAlreadyLoadData = true
         hideLoading()
-        recyclerView.adapter = adapterMatch
-        recyclerView.layoutManager = LinearLayoutManager(ctx)
-        recyclerView.visible()
+        if (!isRefresh) {
+            adapterMatch = AdapterMatch(events = events, listenerAdapterMatch = object : AdapterMatch.ListenerAdapterMatch {
+                override fun onClick(event: Event) {
+                    onClickItemNextMatch(event = event)
+                }
+            })
+            recyclerView.adapter = adapterMatch
+            recyclerView.layoutManager = LinearLayoutManager(ctx)
+            recyclerView.visible()
+        } else {
+            adapterMatch.refreshData(events = events as ArrayList<Event>)
+            recyclerView.visible()
+        }
     }
 
     override fun loadDataFailed(message: String) {
-        isAlreadyLoadData = false
-        hideLoading()
-        recyclerView.invisible()
-        longToast(message)
-    }
-
-    override fun refreshData() {
-        isAlreadyLoadData = true
-        hideLoading()
-        recyclerView.visible()
-    }
-
-    override fun refreshDataFailed(message: String) {
         isAlreadyLoadData = false
         hideLoading()
         recyclerView.invisible()

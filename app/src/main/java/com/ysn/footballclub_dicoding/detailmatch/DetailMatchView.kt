@@ -1,28 +1,18 @@
 /*
- * Created by YSN Studio on 4/16/18 9:39 AM
+ * Created by YSN Studio on 4/22/18 5:48 PM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/15/18 11:37 AM
+ * Last modified 4/22/18 10:56 AM
  */
 
 package com.ysn.footballclub_dicoding.detailmatch
 
+import com.ysn.footballclub_dicoding.model.Team
+
 interface DetailMatchView {
 
-    fun loadImageClub(homeLogo: String, awayLogo: String)
+    fun loadImageClub(homeLogo: List<Team>, awayLogo: List<Team>)
 
     fun loadImageClubFailed(message: String)
-
-    fun addFavoriteMatch()
-
-    fun addFavoriteMatchFailed(localizedMessage: String)
-
-    fun loadData(count: Int)
-
-    fun loadDataFailed(localizedMessage: String)
-
-    fun deleteFavoriteMatch()
-
-    fun deleteFavoriteMatchFailed(localizedMessage: String)
 
 }

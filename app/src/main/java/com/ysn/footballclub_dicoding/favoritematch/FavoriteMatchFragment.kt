@@ -1,13 +1,14 @@
 /*
- * Created by YSN Studio on 4/16/18 9:39 AM
+ * Created by YSN Studio on 4/22/18 5:48 PM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/15/18 1:01 PM
+ * Last modified 4/22/18 11:39 AM
  */
 
 package com.ysn.footballclub_dicoding.favoritematch
 
 
+import android.database.sqlite.SQLiteConstraintException
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
@@ -24,6 +25,8 @@ import com.ysn.footballclub_dicoding.db.EntityEvent
 import com.ysn.footballclub_dicoding.detailmatch.DetailMatchActivity
 import com.ysn.footballclub_dicoding.favoritematch.adapter.AdapterMatchFavorite
 import org.jetbrains.anko.*
+import org.jetbrains.anko.db.classParser
+import org.jetbrains.anko.db.select
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.support.v4.UI
 import org.jetbrains.anko.support.v4.ctx
@@ -34,12 +37,13 @@ import org.jetbrains.anko.support.v4.swipeRefreshLayout
  * A simple [Fragment] subclass.
  *
  */
-class FavoriteMatchFragment : Fragment(), FavoriteMatchView, AnkoLogger {
+class FavoriteMatchFragment : Fragment(), AnkoLogger {
 
-    private lateinit var presenter: FavoriteMatchPresenter
     private lateinit var database: DatabaseOpenHelper
     private lateinit var recyclerView: RecyclerView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+    private lateinit var adapterMatch: AdapterMatchFavorite
+    private lateinit var events: List<EntityEvent>
     private var isAlreadyLoadData: Boolean = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -72,7 +76,6 @@ class FavoriteMatchFragment : Fragment(), FavoriteMatchView, AnkoLogger {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        presenter = FavoriteMatchPresenter(this)
         database = DatabaseOpenHelper.getInstance(ctx)
         if (savedInstanceState != null) {
             isAlreadyLoadData = savedInstanceState.getBoolean("isAlreadyLoadData")
@@ -96,13 +99,52 @@ class FavoriteMatchFragment : Fragment(), FavoriteMatchView, AnkoLogger {
 
     private fun doRefreshData() {
         recyclerView.invisible()
-        presenter.onRefreshData(database = database)
+        events = ArrayList()
+        try {
+            database.use {
+                val result = select(EntityEvent.TABLE_EVENT)
+                events = result.parseList(classParser())
+                adapterMatch.refreshData(events = events as java.util.ArrayList<EntityEvent>)
+                isAlreadyLoadData = true
+                hideLoading()
+                recyclerView.visible()
+            }
+        } catch (e: SQLiteConstraintException) {
+            e.printStackTrace()
+            isAlreadyLoadData = false
+            hideLoading()
+            recyclerView.invisible()
+            longToast(e.localizedMessage)
+        }
     }
 
     private fun doLoadData() {
         showLoading()
         recyclerView.invisible()
-        presenter.onLoadData(database = database)
+        events = ArrayList()
+        adapterMatch = AdapterMatchFavorite(events = events, listenerAdapterMatch = object : AdapterMatchFavorite.ListenerAdapterMatch {
+            override fun onClick(event: EntityEvent) {
+                onClickItemFavoriteMatch(event = event)
+            }
+        })
+        try {
+            database.use {
+                val result = select(EntityEvent.TABLE_EVENT)
+                events = result.parseList(classParser())
+                adapterMatch.refreshData(events = events as java.util.ArrayList<EntityEvent>)
+                isAlreadyLoadData = true
+                hideLoading()
+                recyclerView.adapter = adapterMatch
+                recyclerView.layoutManager = LinearLayoutManager(ctx)
+                recyclerView.visible()
+            }
+        } catch (e: SQLiteConstraintException) {
+            e.printStackTrace()
+            isAlreadyLoadData = false
+            hideLoading()
+            recyclerView.invisible()
+            longToast(e.localizedMessage)
+        }
     }
 
     private fun showLoading() {
@@ -121,37 +163,9 @@ class FavoriteMatchFragment : Fragment(), FavoriteMatchView, AnkoLogger {
         visibility = View.INVISIBLE
     }
 
-    override fun loadData(adapterMatch: AdapterMatchFavorite) {
-        info { "adapterMatch count: ${adapterMatch.itemCount}" }
-        isAlreadyLoadData = true
-        hideLoading()
-        recyclerView.adapter = adapterMatch
-        recyclerView.layoutManager = LinearLayoutManager(ctx)
-        recyclerView.visible()
-    }
-
-    override fun loadDataFailed(localizedMessage: String) {
-        isAlreadyLoadData = false
-        hideLoading()
-        recyclerView.invisible()
-        longToast(localizedMessage)
-    }
-
-    override fun onClickItemFavoriteMatch(event: EntityEvent) {
+    fun onClickItemFavoriteMatch(event: EntityEvent) {
         val intentDetailMatchActivity = ctx.intentFor<DetailMatchActivity>("entityEvent" to event)
         ctx.startActivity(intentDetailMatchActivity)
     }
 
-    override fun refreshData() {
-        isAlreadyLoadData = true
-        hideLoading()
-        recyclerView.visible()
-    }
-
-    override fun refreshDataFailed(localizedMessage: String) {
-        isAlreadyLoadData = false
-        hideLoading()
-        recyclerView.invisible()
-        longToast(localizedMessage)
-    }
 }

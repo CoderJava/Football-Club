@@ -1,55 +1,37 @@
 /*
- * Created by YSN Studio on 4/20/18 8:02 AM
+ * Created by YSN Studio on 4/22/18 5:48 PM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/20/18 8:01 AM
+ * Last modified 4/22/18 11:09 AM
  */
 
 package com.ysn.footballclub_dicoding.previousmatch
 
 import com.google.gson.Gson
-import com.ysn.footballclub_dicoding.api.Endpoints
-import com.ysn.footballclub_dicoding.detailmatch.adapter.AdapterMatch
+import com.ysn.footballclub_dicoding.api.ApiRepository
+import com.ysn.footballclub_dicoding.api.TheSportDbApi
 import com.ysn.footballclub_dicoding.model.Event
 import com.ysn.footballclub_dicoding.model.League
-import kotlinx.coroutines.experimental.android.UI
+import com.ysn.footballclub_dicoding.util.CoroutineContextProvider
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.coroutines.experimental.bg
 
 class PreviousMatchPresenter constructor(private val view: PreviousMatchView?,
-                                         private val endpoints: Endpoints) : AnkoLogger {
+                                         private val apiRepository: ApiRepository,
+                                         private val gson: Gson,
+                                         private val context: CoroutineContextProvider = CoroutineContextProvider()) : AnkoLogger {
 
-    private lateinit var adapterMatch: AdapterMatch
     private lateinit var events: List<Event>
 
     fun onLoadData() {
         events = ArrayList()
-        adapterMatch = AdapterMatch(events = events, listenerAdapterMatch = object : AdapterMatch.ListenerAdapterMatch {
-            override fun onClick(event: Event) {
-                view?.onClickItemPreviousMatch(event = event)
-            }
-        })
-
-        async(UI) {
+        async(context.main) {
             val dataApi = bg {
-                val response = endpoints.getEventPastLeague().execute()
-                Gson().fromJson<League>(response.body()?.string(), League::class.java)
+                gson.fromJson(apiRepository.doRequest(TheSportDbApi.getEventPastLeague()),
+                        League::class.java)
             }
-            adapterMatch.refreshData(events = dataApi.await()!!.events as java.util.ArrayList<Event>)
-            view?.loadData(adapterMatch = adapterMatch)
-        }
-    }
-
-    fun onRefreshData() {
-        events = ArrayList()
-        async(UI) {
-            val dataApi = bg {
-                val response = endpoints.getEventPastLeague().execute()
-                Gson().fromJson<League>(response.body()?.string(), League::class.java)
-            }
-            adapterMatch.refreshData(events = dataApi.await()!!.events as java.util.ArrayList<Event>)
-            view?.refreshData()
+            view?.loadData(events = dataApi.await()!!.events as ArrayList<Event>)
         }
     }
 

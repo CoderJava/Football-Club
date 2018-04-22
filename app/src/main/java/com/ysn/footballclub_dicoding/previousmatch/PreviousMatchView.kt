@@ -1,25 +1,20 @@
 /*
- * Created by YSN Studio on 4/12/18 4:17 AM
+ * Created by YSN Studio on 4/22/18 5:48 PM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/11/18 6:08 PM
+ * Last modified 4/22/18 11:09 AM
  */
 
 package com.ysn.footballclub_dicoding.previousmatch
 
 import com.ysn.footballclub_dicoding.model.Event
-import com.ysn.footballclub_dicoding.detailmatch.adapter.AdapterMatch
 
 interface PreviousMatchView {
 
 
-    fun loadData(adapterMatch: AdapterMatch)
+    fun loadData(events: List<Event>)
 
     fun loadDataFailed(message: String)
-
-    fun refreshData()
-
-    fun refreshDataFailed(message: String)
 
     fun onClickItemPreviousMatch(event: Event)
 }
