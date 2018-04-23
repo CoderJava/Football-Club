@@ -1,8 +1,8 @@
 /*
- * Created by YSN Studio on 4/24/18 12:18 AM
+ * Created by YSN Studio on 4/24/18 1:57 AM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/23/18 11:51 PM
+ * Last modified 4/24/18 12:18 AM
  */
 
 package com.ysn.footballclub_dicoding.favorites

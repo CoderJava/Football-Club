@@ -1,8 +1,8 @@
 /*
- * Created by YSN Studio on 4/24/18 12:18 AM
+ * Created by YSN Studio on 4/24/18 1:57 AM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/24/18 12:06 AM
+ * Last modified 4/24/18 1:51 AM
  */
 
 package com.ysn.footballclub_dicoding.matches.fragment.previousmatch
@@ -10,28 +10,85 @@ package com.ysn.footballclub_dicoding.matches.fragment.previousmatch
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.DividerItemDecoration
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.gson.Gson
 
 import com.ysn.footballclub_dicoding.R
+import com.ysn.footballclub_dicoding.api.ApiRepository
+import com.ysn.footballclub_dicoding.matches.fragment.previousmatch.adapter.AdapterPreviousMatch
+import com.ysn.footballclub_dicoding.model.Event
+import kotlinx.android.synthetic.main.fragment_previous_match.*
+import org.jetbrains.anko.support.v4.ctx
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class PreviousMatchFragment : Fragment(), PreviousMatchView {
 
-/**
- * A simple [Fragment] subclass.
- *
- */
-class PreviousMatchFragment : Fragment() {
+    private val TAG = javaClass.simpleName
+    private var events: MutableList<Event> = mutableListOf()
+    private lateinit var adapterPreviousMatch: AdapterPreviousMatch
+    private lateinit var presenter: PreviousMatchPresenter
+    private lateinit var apiRepository: ApiRepository
+    private lateinit var gson: Gson
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_previous_match, container, false)
+        val view = inflater.inflate(R.layout.fragment_previous_match, container, false)
+        return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        swipe_refresh_layout_fragment_previous_match.isEnabled = false
+        initPresenter()
+        setupAdapterPreviousMatch()
+        doLoadData()
+    }
+
+    private fun initPresenter() {
+        apiRepository = ApiRepository()
+        gson = Gson()
+        presenter = PreviousMatchPresenter(view = this, apiRepository = apiRepository, gson = gson)
+    }
+
+    private fun setupAdapterPreviousMatch() {
+        adapterPreviousMatch = AdapterPreviousMatch(events = events, listenerAdapterMatch = object : AdapterPreviousMatch.ListenerAdapterMatch {
+            override fun onClickItemMatch(event: Event) {
+                doOnClickItemMatch(event = event)
+            }
+        })
+        recycler_view_match_fragment_previous_match.layoutManager = LinearLayoutManager(ctx)
+        recycler_view_match_fragment_previous_match.adapter = adapterPreviousMatch
+    }
+
+    private fun doOnClickItemMatch(event: Event) {
+        // TODO: do something in here
+    }
+
+    private fun doLoadData() {
+        val arrayLeague = resources.getStringArray(R.array.array_league)
+        val arrayLeagueId = resources.getIntArray(R.array.array_league_id)
+        text_view_league_fragment_previous_match.text = arrayLeague[0]
+
+        showLoading()
+        presenter.onLoadDataEventsPastLeague(idLeague = arrayLeagueId[0])
+    }
+
+    private fun showLoading() {
+        swipe_refresh_layout_fragment_previous_match.isRefreshing = true
+    }
+
+    private fun hideLoading() {
+        swipe_refresh_layout_fragment_previous_match.isRefreshing = false
+    }
+
+    override fun loadDataEventsPastLeague(events: List<Event>) {
+        hideLoading()
+        this.events.addAll(events)
+        adapterPreviousMatch.refreshData(this.events)
+    }
 
 }
