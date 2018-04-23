@@ -1,8 +1,8 @@
 /*
- * Created by YSN Studio on 4/22/18 5:48 PM
+ * Created by YSN Studio on 4/24/18 12:17 AM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/20/18 9:39 PM
+ * Last modified 4/23/18 11:43 PM
  */
 
 package com.ysn.footballclub_dicoding
@@ -47,7 +47,7 @@ class MainActivityTest {
         delay3Second()
         onView(withId(R.id.bottom_navigation_view_activity_main))
                 .check(matches(isDisplayed()))
-        onView(withId(R.id.navigation_next_match))
+        onView(withId(R.id.navigation_teams))
                 .perform(click())
         delay3Second()
         onView(withId(R.id.recycler_view_next_match_fragment))
@@ -65,7 +65,7 @@ class MainActivityTest {
         delay3Second()
         onView(withId(R.id.bottom_navigation_view_activity_main))
                 .check(matches(isDisplayed()))
-        onView(withId(R.id.navigation_favorite_match))
+        onView(withId(R.id.navigation_favorites))
                 .perform(click())
         delay3Second()
         onView(withId(R.id.recycler_view_favorite_match_fragment))
