@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Created by YSN Studio on 4/4/18 9:27 AM
+  ~ Created by YSN Studio on 4/24/18 12:18 AM
   ~ Copyright (c) 2018. All rights reserved.
   ~
-  ~ Last modified 4/4/18 9:26 AM
+  ~ Last modified 4/23/18 11:54 PM
   -->
 
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#263238</color>
+    <color name="colorPrimaryDark">#263238</color>
     <color name="colorAccent">#FF4081</color>
 </resources>

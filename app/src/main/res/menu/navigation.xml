@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Created by YSN Studio on 4/16/18 9:39 AM
+  ~ Created by YSN Studio on 4/24/18 12:18 AM
   ~ Copyright (c) 2018. All rights reserved.
   ~
-  ~ Last modified 4/15/18 8:36 AM
+  ~ Last modified 4/23/18 11:45 PM
   -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/navigation_previous_match"
-        android:icon="@drawable/ic_public_black_24dp"
-        android:title="@string/title_previous_match" />
+        android:id="@+id/navigation_matches"
+        android:icon="@drawable/ic_match_white_24dp"
+        android:title="@string/title_matches" />
     <item
-        android:id="@+id/navigation_next_match"
-        android:icon="@drawable/ic_insert_invitation_black_24dp"
-        android:title="@string/title_next_match" />
+        android:id="@+id/navigation_teams"
+        android:icon="@drawable/ic_team_white_24dp"
+        android:title="@string/title_team" />
     <item
-        android:id="@+id/navigation_favorite_match"
-        android:icon="@drawable/ic_stars_black_24dp"
-        android:title="@string/title_favorite_match" />
+        android:id="@+id/navigation_favorites"
+        android:icon="@drawable/ic_favorite_white_24dp"
+        android:title="@string/title_favorites" />
 </menu>
