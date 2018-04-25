@@ -1,8 +1,8 @@
 /*
- * Created by YSN Studio on 4/24/18 1:57 AM
+ * Created by YSN Studio on 4/25/18 3:14 PM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/24/18 1:51 AM
+ * Last modified 4/25/18 2:59 PM
  */
 
 package com.ysn.footballclub_dicoding.matches.fragment.previousmatch
@@ -20,9 +20,11 @@ import com.google.gson.Gson
 
 import com.ysn.footballclub_dicoding.R
 import com.ysn.footballclub_dicoding.api.ApiRepository
+import com.ysn.footballclub_dicoding.matches.activitiy.detailmatch.DetailMatchActivity
 import com.ysn.footballclub_dicoding.matches.fragment.previousmatch.adapter.AdapterPreviousMatch
 import com.ysn.footballclub_dicoding.model.Event
 import kotlinx.android.synthetic.main.fragment_previous_match.*
+import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.support.v4.ctx
 
 class PreviousMatchFragment : Fragment(), PreviousMatchView {
@@ -43,9 +45,16 @@ class PreviousMatchFragment : Fragment(), PreviousMatchView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         swipe_refresh_layout_fragment_previous_match.isEnabled = false
+        initListeners()
         initPresenter()
         setupAdapterPreviousMatch()
         doLoadData()
+    }
+
+    private fun initListeners() {
+        linear_layout_container_league_fragment_previous_match.setOnClickListener {
+            // TODO: do something in here
+        }
     }
 
     private fun initPresenter() {
@@ -65,7 +74,8 @@ class PreviousMatchFragment : Fragment(), PreviousMatchView {
     }
 
     private fun doOnClickItemMatch(event: Event) {
-        // TODO: do something in here
+        val intentDetailMatchActivity = ctx.intentFor<DetailMatchActivity>("event" to event)
+        ctx.startActivity(intentDetailMatchActivity)
     }
 
     private fun doLoadData() {
