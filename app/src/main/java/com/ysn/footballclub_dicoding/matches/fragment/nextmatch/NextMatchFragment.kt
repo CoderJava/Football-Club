@@ -1,13 +1,15 @@
 /*
- * Created by YSN Studio on 4/26/18 4:50 AM
+ * Created by YSN Studio on 4/26/18 4:54 AM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/26/18 3:39 AM
+ * Last modified 4/26/18 4:53 AM
  */
 
 package com.ysn.footballclub_dicoding.matches.fragment.nextmatch
 
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -33,7 +35,6 @@ class NextMatchFragment : Fragment(), NextMatchView {
     private val TAG = javaClass.simpleName
     private val requestCodeSelectLeague = 100
     private var events: MutableList<Event> = mutableListOf()
-    private var idLeague = 0
     private lateinit var adapterNextMatch: AdapterNextMatch
     private lateinit var presenter: NextMatchPresenter
     private lateinit var apiRepository: ApiRepository
@@ -62,7 +63,7 @@ class NextMatchFragment : Fragment(), NextMatchView {
 
     private fun initListeners() {
         linear_layout_container_league_fragment_next_match.setOnClickListener {
-            val intentSelectLeagueMatchActivity = ctx.intentFor<SelectLeagueMatchActivity>("idLeague" to idLeague)
+            val intentSelectLeagueMatchActivity = ctx.intentFor<SelectLeagueMatchActivity>()
             startActivityForResult(intentSelectLeagueMatchActivity, requestCodeSelectLeague)
         }
     }
@@ -80,7 +81,6 @@ class NextMatchFragment : Fragment(), NextMatchView {
     private fun doLoadData() {
         val arrayLeague = resources.getStringArray(R.array.array_league)
         val arrayLeagueId = resources.getIntArray(R.array.array_league_id)
-        idLeague = 0
         text_view_league_fragment_next_match.text = arrayLeague[0]
 
         showLoading()
@@ -89,10 +89,12 @@ class NextMatchFragment : Fragment(), NextMatchView {
 
     private fun showLoading() {
         swipe_refresh_layout_fragment_next_match.isRefreshing = true
+        recycler_view_match_fragment_next_match.visibility = View.INVISIBLE
     }
 
     private fun hideLoading() {
         swipe_refresh_layout_fragment_next_match.isRefreshing = false
+        recycler_view_match_fragment_next_match.visibility = View.VISIBLE
     }
 
     private fun doOnClickItemMatch(event: Event) {
@@ -102,9 +104,21 @@ class NextMatchFragment : Fragment(), NextMatchView {
 
     override fun loadDataEventsNextLeague(events: List<Event>) {
         hideLoading()
+        this.events.clear()
         this.events.addAll(events)
         AnkoLogger(javaClass.simpleName).info { "event.size: ${events.size}" }
         adapterNextMatch.refreshData(this.events)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == requestCodeSelectLeague) {
+            val idLeague = data?.getIntExtra("idLeague", 0)
+            val leagueName = data?.getStringExtra("leagueName")
+            text_view_league_fragment_next_match.text = leagueName
+            showLoading()
+            presenter.onLoadDataEventsNextLeague(idLeague = idLeague!!)
+        }
     }
 
 }
