@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Created by YSN Studio on 4/26/18 3:27 AM
+  ~ Created by YSN Studio on 4/26/18 4:50 AM
   ~ Copyright (c) 2018. All rights reserved.
   ~
-  ~ Last modified 4/25/18 4:17 PM
+  ~ Last modified 4/26/18 4:34 AM
   -->
 
 <resources>
@@ -21,4 +21,8 @@
     <item name="text_view_home_club_name_item_next_match" type="id" />
     <item name="text_view_away_club_name_item_next_match" type="id" />
     <item name="relative_layout_container_item_next_match" type="id" />
+    <item name="recycler_view_select_league_match_activity" type="id" />
+    <item name="relative_layout_container_select_league_match_activity" type="id" />
+    <item name="relative_layout_container_item_select_league_match" type="id" />
+    <item name="text_view_league_name_item_select_league_match" type="id" />
 </resources>

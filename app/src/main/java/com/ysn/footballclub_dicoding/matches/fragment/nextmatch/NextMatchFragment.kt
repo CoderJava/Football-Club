@@ -1,8 +1,8 @@
 /*
- * Created by YSN Studio on 4/26/18 3:27 AM
+ * Created by YSN Studio on 4/26/18 4:50 AM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/26/18 3:14 AM
+ * Last modified 4/26/18 3:39 AM
  */
 
 package com.ysn.footballclub_dicoding.matches.fragment.nextmatch
@@ -20,6 +20,7 @@ import com.ysn.footballclub_dicoding.R
 import com.ysn.footballclub_dicoding.api.ApiRepository
 import com.ysn.footballclub_dicoding.matches.activitiy.detailmatch.DetailMatchActivity
 import com.ysn.footballclub_dicoding.matches.fragment.nextmatch.adapter.AdapterNextMatch
+import com.ysn.footballclub_dicoding.matches.fragment.selectleaguematch.SelectLeagueMatchActivity
 import com.ysn.footballclub_dicoding.model.Event
 import kotlinx.android.synthetic.main.fragment_next_match.*
 import org.jetbrains.anko.AnkoLogger
@@ -30,7 +31,9 @@ import org.jetbrains.anko.support.v4.ctx
 class NextMatchFragment : Fragment(), NextMatchView {
 
     private val TAG = javaClass.simpleName
+    private val requestCodeSelectLeague = 100
     private var events: MutableList<Event> = mutableListOf()
+    private var idLeague = 0
     private lateinit var adapterNextMatch: AdapterNextMatch
     private lateinit var presenter: NextMatchPresenter
     private lateinit var apiRepository: ApiRepository
@@ -59,7 +62,8 @@ class NextMatchFragment : Fragment(), NextMatchView {
 
     private fun initListeners() {
         linear_layout_container_league_fragment_next_match.setOnClickListener {
-            /* nothing to do in here */
+            val intentSelectLeagueMatchActivity = ctx.intentFor<SelectLeagueMatchActivity>("idLeague" to idLeague)
+            startActivityForResult(intentSelectLeagueMatchActivity, requestCodeSelectLeague)
         }
     }
 
@@ -76,6 +80,7 @@ class NextMatchFragment : Fragment(), NextMatchView {
     private fun doLoadData() {
         val arrayLeague = resources.getStringArray(R.array.array_league)
         val arrayLeagueId = resources.getIntArray(R.array.array_league_id)
+        idLeague = 0
         text_view_league_fragment_next_match.text = arrayLeague[0]
 
         showLoading()
@@ -92,7 +97,7 @@ class NextMatchFragment : Fragment(), NextMatchView {
 
     private fun doOnClickItemMatch(event: Event) {
         val intentDetailMatchActivity = ctx.intentFor<DetailMatchActivity>("event" to event)
-        ctx.startActivity(intentDetailMatchActivity)
+        startActivity(intentDetailMatchActivity)
     }
 
     override fun loadDataEventsNextLeague(events: List<Event>) {
