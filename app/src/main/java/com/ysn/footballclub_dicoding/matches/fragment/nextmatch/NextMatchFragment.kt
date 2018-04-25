@@ -1,8 +1,8 @@
 /*
- * Created by YSN Studio on 4/24/18 12:18 AM
+ * Created by YSN Studio on 4/26/18 3:27 AM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/24/18 12:06 AM
+ * Last modified 4/26/18 3:14 AM
  */
 
 package com.ysn.footballclub_dicoding.matches.fragment.nextmatch
@@ -10,28 +10,96 @@ package com.ysn.footballclub_dicoding.matches.fragment.nextmatch
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.gson.Gson
 
 import com.ysn.footballclub_dicoding.R
+import com.ysn.footballclub_dicoding.api.ApiRepository
+import com.ysn.footballclub_dicoding.matches.activitiy.detailmatch.DetailMatchActivity
+import com.ysn.footballclub_dicoding.matches.fragment.nextmatch.adapter.AdapterNextMatch
+import com.ysn.footballclub_dicoding.model.Event
+import kotlinx.android.synthetic.main.fragment_next_match.*
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
+import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.support.v4.ctx
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class NextMatchFragment : Fragment(), NextMatchView {
 
-/**
- * A simple [Fragment] subclass.
- *
- */
-class NextMatchFragment : Fragment() {
+    private val TAG = javaClass.simpleName
+    private var events: MutableList<Event> = mutableListOf()
+    private lateinit var adapterNextMatch: AdapterNextMatch
+    private lateinit var presenter: NextMatchPresenter
+    private lateinit var apiRepository: ApiRepository
+    private lateinit var gson: Gson
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_next_match, container, false)
+        val view = inflater.inflate(R.layout.fragment_next_match, container, false)
+        return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        swipe_refresh_layout_fragment_next_match.isEnabled = false
+        initPresenter()
+        initListeners()
+        setupAdapterNextMatch()
+        doLoadData()
+    }
+
+    private fun initPresenter() {
+        apiRepository = ApiRepository()
+        gson = Gson()
+        presenter = NextMatchPresenter(view = this, apiRepository = apiRepository, gson = gson)
+    }
+
+    private fun initListeners() {
+        linear_layout_container_league_fragment_next_match.setOnClickListener {
+            /* nothing to do in here */
+        }
+    }
+
+    private fun setupAdapterNextMatch() {
+        adapterNextMatch = AdapterNextMatch(events = events, listenerAdapterMatch = object : AdapterNextMatch.ListenerAdapterMatch {
+            override fun onClickItemMatch(event: Event) {
+                doOnClickItemMatch(event = event)
+            }
+        })
+        recycler_view_match_fragment_next_match.layoutManager = LinearLayoutManager(ctx)
+        recycler_view_match_fragment_next_match.adapter = adapterNextMatch
+    }
+
+    private fun doLoadData() {
+        val arrayLeague = resources.getStringArray(R.array.array_league)
+        val arrayLeagueId = resources.getIntArray(R.array.array_league_id)
+        text_view_league_fragment_next_match.text = arrayLeague[0]
+
+        showLoading()
+        presenter.onLoadDataEventsNextLeague(idLeague = arrayLeagueId[0])
+    }
+
+    private fun showLoading() {
+        swipe_refresh_layout_fragment_next_match.isRefreshing = true
+    }
+
+    private fun hideLoading() {
+        swipe_refresh_layout_fragment_next_match.isRefreshing = false
+    }
+
+    private fun doOnClickItemMatch(event: Event) {
+        val intentDetailMatchActivity = ctx.intentFor<DetailMatchActivity>("event" to event)
+        ctx.startActivity(intentDetailMatchActivity)
+    }
+
+    override fun loadDataEventsNextLeague(events: List<Event>) {
+        hideLoading()
+        this.events.addAll(events)
+        AnkoLogger(javaClass.simpleName).info { "event.size: ${events.size}" }
+        adapterNextMatch.refreshData(this.events)
+    }
 
 }

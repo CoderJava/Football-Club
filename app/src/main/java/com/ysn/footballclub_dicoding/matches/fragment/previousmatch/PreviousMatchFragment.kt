@@ -1,8 +1,8 @@
 /*
- * Created by YSN Studio on 4/25/18 3:14 PM
+ * Created by YSN Studio on 4/26/18 3:27 AM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/25/18 2:59 PM
+ * Last modified 4/26/18 3:13 AM
  */
 
 package com.ysn.footballclub_dicoding.matches.fragment.previousmatch
@@ -45,15 +45,15 @@ class PreviousMatchFragment : Fragment(), PreviousMatchView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         swipe_refresh_layout_fragment_previous_match.isEnabled = false
-        initListeners()
         initPresenter()
+        initListeners()
         setupAdapterPreviousMatch()
         doLoadData()
     }
 
     private fun initListeners() {
         linear_layout_container_league_fragment_previous_match.setOnClickListener {
-            // TODO: do something in here
+            /* nothing to do in here */
         }
     }
 

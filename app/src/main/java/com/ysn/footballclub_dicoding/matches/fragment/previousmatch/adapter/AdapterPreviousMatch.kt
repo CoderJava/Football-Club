@@ -1,8 +1,8 @@
 /*
- * Created by YSN Studio on 4/24/18 1:57 AM
+ * Created by YSN Studio on 4/26/18 3:27 AM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/24/18 1:56 AM
+ * Last modified 4/25/18 4:09 PM
  */
 
 package com.ysn.footballclub_dicoding.matches.fragment.previousmatch.adapter
@@ -54,7 +54,7 @@ class AdapterPreviousMatch constructor(private var events: List<Event>,
 
         private val relativeLayoutContainerItmePreviousMatch: RelativeLayout = itemView
                 .find(R.id.relative_layout_container_item_previous_match)
-        val textViewDateSchedule: TextView = itemView.find(R.id.text_view_date_schedule_previous_match)
+        val textViewDateSchedule: TextView = itemView.find(R.id.text_view_date_schedule_item_previous_match)
         val textViewHomeScore: TextView = itemView.find(R.id.text_view_home_score_item_previous_match)
         val textViewAwayScore: TextView = itemView.find(R.id.text_view_away_score_item_previous_match)
         val textViewHomeClubName: TextView = itemView.find(R.id.text_view_home_club_name_item_previous_match)
@@ -83,7 +83,7 @@ class ItemPreviousMatchUI : AnkoComponent<ViewGroup> {
             relativeLayout {
 
                 textView {
-                    id = R.id.text_view_date_schedule_previous_match
+                    id = R.id.text_view_date_schedule_item_previous_match
                     text = ctx.getString(R.string.example_date_schedule)
                 }.lparams {
                     width = wrapContent
@@ -101,7 +101,7 @@ class ItemPreviousMatchUI : AnkoComponent<ViewGroup> {
                     height = wrapContent
                     rightMargin = dip(20)
                     leftMargin = dip(20)
-                    below(R.id.text_view_date_schedule_previous_match)
+                    below(R.id.text_view_date_schedule_item_previous_match)
                     centerHorizontally()
                 }
 
@@ -114,7 +114,7 @@ class ItemPreviousMatchUI : AnkoComponent<ViewGroup> {
                     width = wrapContent
                     height = wrapContent
                     leftMargin = dip(20)
-                    below(R.id.text_view_date_schedule_previous_match)
+                    below(R.id.text_view_date_schedule_item_previous_match)
                     leftOf(R.id.text_view_label_vs_item_previous_match)
                 }
 
@@ -127,7 +127,7 @@ class ItemPreviousMatchUI : AnkoComponent<ViewGroup> {
                     width = wrapContent
                     height = wrapContent
                     rightMargin = dip(20)
-                    below(R.id.text_view_date_schedule_previous_match)
+                    below(R.id.text_view_date_schedule_item_previous_match)
                     rightOf(R.id.text_view_label_vs_item_previous_match)
                 }
 
@@ -138,7 +138,7 @@ class ItemPreviousMatchUI : AnkoComponent<ViewGroup> {
                 }.lparams {
                     width = wrapContent
                     height = wrapContent
-                    below(R.id.text_view_date_schedule_previous_match)
+                    below(R.id.text_view_date_schedule_item_previous_match)
                     leftOf(R.id.text_view_home_score_item_previous_match)
                 }
 
@@ -149,7 +149,7 @@ class ItemPreviousMatchUI : AnkoComponent<ViewGroup> {
                 }.lparams {
                     width = wrapContent
                     height = wrapContent
-                    below(R.id.text_view_date_schedule_previous_match)
+                    below(R.id.text_view_date_schedule_item_previous_match)
                     rightOf(R.id.text_view_away_score_item_previous_match)
                 }
 
