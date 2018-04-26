@@ -1,13 +1,12 @@
 /*
- * Created by YSN Studio on 4/26/18 8:03 AM
+ * Created by YSN Studio on 4/26/18 8:08 AM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/26/18 4:59 AM
+ * Last modified 4/26/18 8:07 AM
  */
 
 package com.ysn.footballclub_dicoding.matches.fragment.nextmatch.adapter
 
-import android.graphics.Typeface
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
@@ -99,7 +98,7 @@ class ItemNextMatchUI : AnkoComponent<ViewGroup> {
 
                 imageView {
                     id = R.id.image_view_add_event_calendar_item_next_match
-                    image = ContextCompat.getDrawable(ctx, R.drawable.ic_add_alert_accent_24dp)
+                    image = ContextCompat.getDrawable(ctx, R.drawable.ic_add_alert_color_primary_24dp)
                 }.lparams {
                     width = wrapContent
                     height = wrapContent
