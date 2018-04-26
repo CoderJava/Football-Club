@@ -1,8 +1,8 @@
 /*
- * Created by YSN Studio on 4/26/18 4:54 AM
+ * Created by YSN Studio on 4/26/18 8:03 AM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/26/18 4:53 AM
+ * Last modified 4/26/18 8:00 AM
  */
 
 package com.ysn.footballclub_dicoding.matches.fragment.nextmatch
@@ -29,6 +29,8 @@ import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.support.v4.ctx
+import java.text.SimpleDateFormat
+import java.util.*
 
 class NextMatchFragment : Fragment(), NextMatchView {
 
@@ -72,6 +74,22 @@ class NextMatchFragment : Fragment(), NextMatchView {
         adapterNextMatch = AdapterNextMatch(events = events, listenerAdapterMatch = object : AdapterNextMatch.ListenerAdapterMatch {
             override fun onClickItemMatch(event: Event) {
                 doOnClickItemMatch(event = event)
+            }
+
+            override fun onAddMatchToCalendarEvent(event: Event) {
+                val calendarEvent = Calendar.getInstance()
+                val strDate = event.strDate
+                val strTime = event.strTime.split("+")[0]
+                val dateEvent = SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.US)
+                        .parse("$strDate $strTime")
+                calendarEvent.time = dateEvent
+                val intentCalendarEvent = Intent(Intent.ACTION_EDIT)
+                intentCalendarEvent.type = "vnd.android.cursor.item/event"
+                intentCalendarEvent.putExtra("beginTime", calendarEvent.timeInMillis)
+                intentCalendarEvent.putExtra("allDay", false)
+                intentCalendarEvent.putExtra("endTime", calendarEvent.timeInMillis + 60 * 60 * 1000)
+                intentCalendarEvent.putExtra("title", event.strFilename)
+                startActivity(intentCalendarEvent)
             }
         })
         recycler_view_match_fragment_next_match.layoutManager = LinearLayoutManager(ctx)

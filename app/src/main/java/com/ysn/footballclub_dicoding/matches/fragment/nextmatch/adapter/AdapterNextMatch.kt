@@ -1,8 +1,8 @@
 /*
- * Created by YSN Studio on 4/26/18 3:27 AM
+ * Created by YSN Studio on 4/26/18 8:03 AM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/26/18 3:26 AM
+ * Last modified 4/26/18 4:59 AM
  */
 
 package com.ysn.footballclub_dicoding.matches.fragment.nextmatch.adapter
@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.ysn.footballclub_dicoding.R
@@ -54,6 +55,8 @@ class AdapterNextMatch constructor(private var events: List<Event>,
 
         private val relativeLayoutContainerItemNextMatch: RelativeLayout = itemView
                 .find(R.id.relative_layout_container_item_next_match)
+        private val imageViewAddEventCalendarItemNextMatch: ImageView = itemView
+                .find(R.id.image_view_add_event_calendar_item_next_match)
         val textViewDateSchedule: TextView = itemView.find(R.id.text_view_date_schedule_item_next_match)
         val textViewHomeClubName: TextView = itemView.find(R.id.text_view_home_club_name_item_next_match)
         val textViewAwayClubName: TextView = itemView.find(R.id.text_view_away_club_name_item_next_match)
@@ -62,12 +65,17 @@ class AdapterNextMatch constructor(private var events: List<Event>,
             relativeLayoutContainerItemNextMatch.setOnClickListener {
                 listenerAdapterMatch.onClickItemMatch(event = events[adapterPosition])
             }
+            imageViewAddEventCalendarItemNextMatch.setOnClickListener {
+                listenerAdapterMatch.onAddMatchToCalendarEvent(event = events[adapterPosition])
+            }
         }
     }
 
     interface ListenerAdapterMatch {
 
         fun onClickItemMatch(event: Event)
+
+        fun onAddMatchToCalendarEvent(event: Event)
 
     }
 
