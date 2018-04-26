@@ -1,8 +1,8 @@
 /*
- * Created by YSN Studio on 4/24/18 12:18 AM
+ * Created by YSN Studio on 4/26/18 11:09 PM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/23/18 11:49 PM
+ * Last modified 4/26/18 8:12 AM
  */
 
 package com.ysn.footballclub_dicoding.teams
@@ -16,15 +16,6 @@ import android.view.ViewGroup
 
 import com.ysn.footballclub_dicoding.R
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- *
- */
 class TeamsFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

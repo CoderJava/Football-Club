@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Created by YSN Studio on 4/26/18 11:09 PM
+  ~ Copyright (c) 2018. All rights reserved.
+  ~
+  ~ Last modified 4/26/18 8:21 AM
+  -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_item_search_menu_matches"
+        android:icon="@drawable/ic_search_white_24dp"
+        android:orderInCategory="1"
+        android:title="@string/search"
+        app:showAsAction="always" />
+</menu>

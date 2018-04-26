@@ -1,14 +1,14 @@
 /*
- * Created by YSN Studio on 4/25/18 3:14 PM
+ * Created by YSN Studio on 4/26/18 11:09 PM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/25/18 3:13 PM
+ * Last modified 4/26/18 10:45 PM
  */
 
 package com.ysn.footballclub_dicoding.matches.activitiy.detailmatch
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -19,13 +19,12 @@ import com.ysn.footballclub_dicoding.api.ApiRepository
 import com.ysn.footballclub_dicoding.db.EntityEvent
 import com.ysn.footballclub_dicoding.db.database
 import com.ysn.footballclub_dicoding.model.Event
+import com.ysn.footballclub_dicoding.model.EventSearchLeague
 import com.ysn.footballclub_dicoding.model.Team
 import kotlinx.android.synthetic.main.activity_detail_match.*
-import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.db.delete
 import org.jetbrains.anko.db.insert
 import org.jetbrains.anko.db.select
-import org.jetbrains.anko.info
 import org.jetbrains.anko.toast
 
 class DetailMatchActivity : AppCompatActivity(), DetailMatchView {
@@ -146,7 +145,38 @@ class DetailMatchActivity : AppCompatActivity(), DetailMatchView {
     private fun doLoadData() {
         val bundle = intent.extras
         if (bundle.containsKey("event")) {
-            event = bundle?.getSerializable("event") as Event
+            val dataEvent = bundle?.getSerializable("event")
+            if (dataEvent is Event) {
+                event = bundle.getSerializable("event") as Event
+            } else {
+                val eventSearchLeague = bundle.getSerializable("event") as EventSearchLeague
+                event = Event(
+                        idEvent = eventSearchLeague.idEvent,
+                        dateEvent = eventSearchLeague.dateEvent,
+                        idHomeTeam = eventSearchLeague.idHomeTeam,
+                        idAwayTeam = eventSearchLeague.idAwayTeam,
+                        intHomeScore = eventSearchLeague.intHomeScore,
+                        intAwayScore = eventSearchLeague.intAwayScore,
+                        strHomeTeam = eventSearchLeague.strHomeTeam,
+                        strAwayTeam = eventSearchLeague.strAwayTeam,
+                        strHomeFormation = eventSearchLeague.strHomeFormation,
+                        strAwayFormation = eventSearchLeague.strAwayFormation,
+                        strHomeGoalDetails = eventSearchLeague.strHomeGoalDetails,
+                        strAwayGoalDetails = eventSearchLeague.strAwayGoalDetails,
+                        intHomeShots = eventSearchLeague.intHomeShots,
+                        intAwayShots = eventSearchLeague.intAwayShots,
+                        strHomeLineupGoalkeeper = eventSearchLeague.strHomeLineupGoalkeeper,
+                        strAwayLineupGoalkeeper = eventSearchLeague.strAwayLineupGoalkeeper,
+                        strHomeLineupDefense = eventSearchLeague.strHomeLineupDefense,
+                        strAwayLineupDefense = eventSearchLeague.strAwayLineupDefense,
+                        strHomeLineupMidfield = eventSearchLeague.strHomeLineupMidfield,
+                        strAwayLineupMidfield = eventSearchLeague.strAwayLineupMidfield,
+                        strHomeLineupForward = eventSearchLeague.strHomeLineupForward,
+                        strAwayLineupForward = eventSearchLeague.strAwayLineupForward,
+                        strHomeLineupSubstitutes = eventSearchLeague.strHomeLineupSubstitutes,
+                        strAwayLineupSubstitutes = eventSearchLeague.strAwayLineupSubstitutes
+                )
+            }
         } else {
             val entityEvent = bundle.getSerializable("entityEvent") as EntityEvent
             event = Event(

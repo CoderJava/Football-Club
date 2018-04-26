@@ -1,14 +1,21 @@
 <!--
-  ~ Created by YSN Studio on 4/4/18 9:27 AM
+  ~ Created by YSN Studio on 4/26/18 11:09 PM
   ~ Copyright (c) 2018. All rights reserved.
   ~
-  ~ Last modified 4/4/18 9:26 AM
+  ~ Last modified 4/26/18 10:17 PM
   -->
 
 <resources>
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppThemeWithoutToolbar" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Created by YSN Studio on 4/26/18 11:09 PM
+  ~ Copyright (c) 2018. All rights reserved.
+  ~
+  ~ Last modified 4/26/18 10:20 PM
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".matches.activitiy.searchmatch.SearchMatchesActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_activity_search_matches"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/colorPrimary">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/image_view_clear_keyword_activity_search_matches"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/image_view_icon_clear"
+                android:paddingEnd="@dimen/activity_horizontal_margin"
+                android:paddingStart="@dimen/activity_horizontal_margin"
+                android:src="@drawable/ic_clear_white_24dp" />
+
+            <EditText
+                android:id="@+id/edit_text_keyword_activity_search_matches"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@+id/image_view_clear_keyword_activity_search_matches"
+                android:hint="@string/input_a_keyword"
+                android:imeOptions="actionSearch"
+                android:textColor="@android:color/white"
+                android:inputType="text"
+                android:textColorHint="@android:color/darker_gray" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar_activity_search_matches">
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_layout_activity_search_matches"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view_search_activity_search_matches"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>
