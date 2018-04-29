@@ -1,8 +1,8 @@
 /*
- * Created by YSN Studio on 4/26/18 4:50 AM
+ * Created by YSN Studio on 4/29/18 10:50 PM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/26/18 4:49 AM
+ * Last modified 4/29/18 10:50 PM
  */
 
 package com.ysn.footballclub_dicoding.matches.fragment.previousmatch
@@ -26,11 +26,10 @@ import com.ysn.footballclub_dicoding.matches.fragment.selectleaguematch.SelectLe
 import com.ysn.footballclub_dicoding.model.Event
 import kotlinx.android.synthetic.main.fragment_previous_match.*
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.support.v4.ctx
 
-class PreviousMatchFragment : Fragment(), PreviousMatchView {
+class PreviousMatchFragment : Fragment(), PreviousMatchView, AnkoLogger {
 
     private val TAG = javaClass.simpleName
     private val requestCodeSelectLeague = 100
@@ -114,7 +113,6 @@ class PreviousMatchFragment : Fragment(), PreviousMatchView {
         if (resultCode == Activity.RESULT_OK && requestCode == requestCode) {
             val idLeague = data?.getIntExtra("idLeague", 0)
             val leagueName = data?.getStringExtra("leagueName")
-            AnkoLogger(TAG).info { "idLeague: $idLeague" }
             text_view_league_fragment_previous_match.text = leagueName
             showLoading()
             presenter.onLoadDataEventsPastLeague(idLeague = idLeague!!)

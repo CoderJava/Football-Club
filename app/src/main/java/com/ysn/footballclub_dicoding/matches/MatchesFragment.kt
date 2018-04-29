@@ -1,8 +1,8 @@
 /*
- * Created by YSN Studio on 4/24/18 12:18 AM
+ * Created by YSN Studio on 4/29/18 10:50 PM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/24/18 12:10 AM
+ * Last modified 4/29/18 10:50 PM
  */
 
 package com.ysn.footballclub_dicoding.matches
@@ -18,11 +18,13 @@ import com.ysn.footballclub_dicoding.matches.adapter.ViewPagerAdapterMatches
 import com.ysn.footballclub_dicoding.matches.fragment.nextmatch.NextMatchFragment
 import com.ysn.footballclub_dicoding.matches.fragment.previousmatch.PreviousMatchFragment
 import kotlinx.android.synthetic.main.fragment_matches.*
+import org.jetbrains.anko.AnkoLogger
 
 
-class MatchesFragment : Fragment() {
+class MatchesFragment : Fragment(), AnkoLogger {
 
     private val TAG = javaClass.simpleName
+    private lateinit var viewPagerAdapterMatches: ViewPagerAdapterMatches
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -41,7 +43,7 @@ class MatchesFragment : Fragment() {
     }
 
     private fun setupViewPager() {
-        val viewPagerAdapterMatches = ViewPagerAdapterMatches(fragmentManager)
+        viewPagerAdapterMatches = ViewPagerAdapterMatches(fragmentManager)
         val previousMatchFragment = PreviousMatchFragment()
         val nextMatchFragment = NextMatchFragment()
         viewPagerAdapterMatches.addFragment(previousMatchFragment, getString(R.string.title_previous_match))

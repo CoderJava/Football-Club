@@ -1,17 +1,17 @@
 /*
- * Created by YSN Studio on 4/24/18 12:18 AM
+ * Created by YSN Studio on 4/29/18 10:50 PM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/24/18 12:03 AM
+ * Last modified 4/29/18 10:48 PM
  */
 
 package com.ysn.footballclub_dicoding.matches.adapter
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
+import android.support.v4.app.FragmentStatePagerAdapter
 
-class ViewPagerAdapterMatches constructor(fm: FragmentManager?) : FragmentPagerAdapter(fm) {
+class ViewPagerAdapterMatches constructor(fm: FragmentManager?) : FragmentStatePagerAdapter(fm) {
 
     private val TAG = javaClass.simpleName
     private val mFragmentList = ArrayList<Fragment>()

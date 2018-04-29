@@ -1,8 +1,8 @@
 /*
- * Created by YSN Studio on 4/26/18 11:09 PM
+ * Created by YSN Studio on 4/29/18 10:50 PM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/26/18 9:13 PM
+ * Last modified 4/29/18 10:38 PM
  */
 
 package com.ysn.footballclub_dicoding
@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
                 }
                 else -> {
                     /* nothing to do in here */
-                    true
+                    false
                 }
             }
         }
