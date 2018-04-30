@@ -1,8 +1,8 @@
 /*
- * Created by YSN Studio on 4/26/18 8:03 AM
+ * Created by YSN Studio on 4/30/18 10:22 PM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/26/18 8:00 AM
+ * Last modified 4/30/18 9:34 PM
  */
 
 package com.ysn.footballclub_dicoding.matches.fragment.nextmatch
@@ -22,8 +22,8 @@ import com.ysn.footballclub_dicoding.R
 import com.ysn.footballclub_dicoding.api.ApiRepository
 import com.ysn.footballclub_dicoding.matches.activitiy.detailmatch.DetailMatchActivity
 import com.ysn.footballclub_dicoding.matches.fragment.nextmatch.adapter.AdapterNextMatch
-import com.ysn.footballclub_dicoding.matches.fragment.selectleaguematch.SelectLeagueMatchActivity
-import com.ysn.footballclub_dicoding.model.Event
+import com.ysn.footballclub_dicoding.selectleague.SelectLeagueMatchActivity
+import com.ysn.footballclub_dicoding.model.matches.EventMatches
 import kotlinx.android.synthetic.main.fragment_next_match.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
@@ -36,7 +36,7 @@ class NextMatchFragment : Fragment(), NextMatchView {
 
     private val TAG = javaClass.simpleName
     private val requestCodeSelectLeague = 100
-    private var events: MutableList<Event> = mutableListOf()
+    private var eventMatches: MutableList<EventMatches> = mutableListOf()
     private lateinit var adapterNextMatch: AdapterNextMatch
     private lateinit var presenter: NextMatchPresenter
     private lateinit var apiRepository: ApiRepository
@@ -71,24 +71,24 @@ class NextMatchFragment : Fragment(), NextMatchView {
     }
 
     private fun setupAdapterNextMatch() {
-        adapterNextMatch = AdapterNextMatch(events = events, listenerAdapterMatch = object : AdapterNextMatch.ListenerAdapterMatch {
-            override fun onClickItemMatch(event: Event) {
-                doOnClickItemMatch(event = event)
+        adapterNextMatch = AdapterNextMatch(eventMatches = eventMatches, listenerAdapterMatch = object : AdapterNextMatch.ListenerAdapterMatch {
+            override fun onClickItemMatch(eventMatches: EventMatches) {
+                doOnClickItemMatch(eventMatches = eventMatches)
             }
 
-            override fun onAddMatchToCalendarEvent(event: Event) {
+            override fun onAddMatchToCalendarEvent(eventMatches: EventMatches) {
                 val calendarEvent = Calendar.getInstance()
-                val strDate = event.strDate
-                val strTime = event.strTime.split("+")[0]
+                val strDate = eventMatches.strDate
+                val strTime = eventMatches.strTime.split("+")[0]
                 val dateEvent = SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.US)
                         .parse("$strDate $strTime")
                 calendarEvent.time = dateEvent
                 val intentCalendarEvent = Intent(Intent.ACTION_EDIT)
-                intentCalendarEvent.type = "vnd.android.cursor.item/event"
+                intentCalendarEvent.type = "vnd.android.cursor.item/eventMatches"
                 intentCalendarEvent.putExtra("beginTime", calendarEvent.timeInMillis)
                 intentCalendarEvent.putExtra("allDay", false)
                 intentCalendarEvent.putExtra("endTime", calendarEvent.timeInMillis + 60 * 60 * 1000)
-                intentCalendarEvent.putExtra("title", event.strFilename)
+                intentCalendarEvent.putExtra("title", eventMatches.strFilename)
                 startActivity(intentCalendarEvent)
             }
         })
@@ -115,17 +115,17 @@ class NextMatchFragment : Fragment(), NextMatchView {
         recycler_view_match_fragment_next_match.visibility = View.VISIBLE
     }
 
-    private fun doOnClickItemMatch(event: Event) {
-        val intentDetailMatchActivity = ctx.intentFor<DetailMatchActivity>("event" to event)
+    private fun doOnClickItemMatch(eventMatches: EventMatches) {
+        val intentDetailMatchActivity = ctx.intentFor<DetailMatchActivity>("eventMatches" to eventMatches)
         startActivity(intentDetailMatchActivity)
     }
 
-    override fun loadDataEventsNextLeague(events: List<Event>) {
+    override fun loadDataEventsNextLeague(eventMatches: List<EventMatches>) {
         hideLoading()
-        this.events.clear()
-        this.events.addAll(events)
-        AnkoLogger(javaClass.simpleName).info { "event.size: ${events.size}" }
-        adapterNextMatch.refreshData(this.events)
+        this.eventMatches.clear()
+        this.eventMatches.addAll(eventMatches)
+        AnkoLogger(javaClass.simpleName).info { "eventMatches.size: ${eventMatches.size}" }
+        adapterNextMatch.refreshData(this.eventMatches)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

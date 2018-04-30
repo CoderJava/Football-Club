@@ -1,8 +1,8 @@
 /*
- * Created by YSN Studio on 4/24/18 1:57 AM
+ * Created by YSN Studio on 4/30/18 10:22 PM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/24/18 1:48 AM
+ * Last modified 4/30/18 9:34 PM
  */
 
 package com.ysn.footballclub_dicoding.matches.fragment.previousmatch
@@ -10,7 +10,7 @@ package com.ysn.footballclub_dicoding.matches.fragment.previousmatch
 import com.google.gson.Gson
 import com.ysn.footballclub_dicoding.api.ApiRepository
 import com.ysn.footballclub_dicoding.api.TheSportDbApi
-import com.ysn.footballclub_dicoding.model.League
+import com.ysn.footballclub_dicoding.model.matches.LeagueMatches
 import com.ysn.footballclub_dicoding.util.CoroutineContextProvider
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
@@ -26,9 +26,9 @@ class PreviousMatchPresenter constructor(private val view: PreviousMatchFragment
         async(context.main) {
             val dataApi = bg {
                 gson.fromJson(apiRepository.doRequest(TheSportDbApi.getEventsPastLeague(idLeague = idLeague.toString())),
-                        League::class.java)
+                        LeagueMatches::class.java)
             }
-            view.loadDataEventsPastLeague(events = dataApi.await().events)
+            view.loadDataEventsPastLeague(eventMatches = dataApi.await().eventMatches)
         }
     }
 }

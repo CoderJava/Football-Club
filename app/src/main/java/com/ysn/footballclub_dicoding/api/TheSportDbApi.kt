@@ -1,8 +1,8 @@
 /*
- * Created by YSN Studio on 4/26/18 11:09 PM
+ * Created by YSN Studio on 4/30/18 10:22 PM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/26/18 10:23 PM
+ * Last modified 4/30/18 10:07 PM
  */
 
 package com.ysn.footballclub_dicoding.api
@@ -29,6 +29,10 @@ object TheSportDbApi {
         val endpoint = "${BuildConfig.BASE_URL}searchevents.php?e=$keyword"
         AnkoLogger(javaClass.simpleName).info { "endpoint: $endpoint" }
         return endpoint
+    }
+
+    fun getAllTeamsByLeague(idLeague: String): String {
+        return "${BuildConfig.BASE_URL}lookup_all_teams.php?id=$idLeague"
     }
 
 }

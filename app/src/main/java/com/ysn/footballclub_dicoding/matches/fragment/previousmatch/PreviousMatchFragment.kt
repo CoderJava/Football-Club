@@ -1,8 +1,8 @@
 /*
- * Created by YSN Studio on 4/29/18 10:50 PM
+ * Created by YSN Studio on 4/30/18 10:22 PM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/29/18 10:50 PM
+ * Last modified 4/30/18 10:07 PM
  */
 
 package com.ysn.footballclub_dicoding.matches.fragment.previousmatch
@@ -22,8 +22,8 @@ import com.ysn.footballclub_dicoding.R
 import com.ysn.footballclub_dicoding.api.ApiRepository
 import com.ysn.footballclub_dicoding.matches.activitiy.detailmatch.DetailMatchActivity
 import com.ysn.footballclub_dicoding.matches.fragment.previousmatch.adapter.AdapterPreviousMatch
-import com.ysn.footballclub_dicoding.matches.fragment.selectleaguematch.SelectLeagueMatchActivity
-import com.ysn.footballclub_dicoding.model.Event
+import com.ysn.footballclub_dicoding.selectleague.SelectLeagueMatchActivity
+import com.ysn.footballclub_dicoding.model.matches.EventMatches
 import kotlinx.android.synthetic.main.fragment_previous_match.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.intentFor
@@ -33,7 +33,7 @@ class PreviousMatchFragment : Fragment(), PreviousMatchView, AnkoLogger {
 
     private val TAG = javaClass.simpleName
     private val requestCodeSelectLeague = 100
-    private var events: MutableList<Event> = mutableListOf()
+    private var eventMatches: MutableList<EventMatches> = mutableListOf()
     private lateinit var adapterPreviousMatch: AdapterPreviousMatch
     private lateinit var presenter: PreviousMatchPresenter
     private lateinit var apiRepository: ApiRepository
@@ -68,17 +68,17 @@ class PreviousMatchFragment : Fragment(), PreviousMatchView, AnkoLogger {
     }
 
     private fun setupAdapterPreviousMatch() {
-        adapterPreviousMatch = AdapterPreviousMatch(events = events, listenerAdapterMatch = object : AdapterPreviousMatch.ListenerAdapterMatch {
-            override fun onClickItemMatch(event: Event) {
-                doOnClickItemMatch(event = event)
+        adapterPreviousMatch = AdapterPreviousMatch(eventMatches = eventMatches, listenerAdapterMatch = object : AdapterPreviousMatch.ListenerAdapterMatch {
+            override fun onClickItemMatch(eventMatches: EventMatches) {
+                doOnClickItemMatch(eventMatches = eventMatches)
             }
         })
         recycler_view_match_fragment_previous_match.layoutManager = LinearLayoutManager(ctx)
         recycler_view_match_fragment_previous_match.adapter = adapterPreviousMatch
     }
 
-    private fun doOnClickItemMatch(event: Event) {
-        val intentDetailMatchActivity = ctx.intentFor<DetailMatchActivity>("event" to event)
+    private fun doOnClickItemMatch(eventMatches: EventMatches) {
+        val intentDetailMatchActivity = ctx.intentFor<DetailMatchActivity>("eventMatches" to eventMatches)
         startActivity(intentDetailMatchActivity)
     }
 
@@ -101,16 +101,16 @@ class PreviousMatchFragment : Fragment(), PreviousMatchView, AnkoLogger {
         recycler_view_match_fragment_previous_match.visibility = View.VISIBLE
     }
 
-    override fun loadDataEventsPastLeague(events: List<Event>) {
+    override fun loadDataEventsPastLeague(eventMatches: List<EventMatches>) {
         hideLoading()
-        this.events.clear()
-        this.events.addAll(events)
-        adapterPreviousMatch.refreshData(this.events)
+        this.eventMatches.clear()
+        this.eventMatches.addAll(eventMatches)
+        adapterPreviousMatch.refreshData(this.eventMatches)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == requestCode) {
+        if (resultCode == Activity.RESULT_OK && requestCode == requestCodeSelectLeague) {
             val idLeague = data?.getIntExtra("idLeague", 0)
             val leagueName = data?.getStringExtra("leagueName")
             text_view_league_fragment_previous_match.text = leagueName

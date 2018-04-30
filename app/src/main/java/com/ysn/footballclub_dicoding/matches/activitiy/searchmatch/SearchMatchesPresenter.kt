@@ -1,8 +1,8 @@
 /*
- * Created by YSN Studio on 4/26/18 11:09 PM
+ * Created by YSN Studio on 4/30/18 10:22 PM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/26/18 10:36 PM
+ * Last modified 4/30/18 9:34 PM
  */
 
 package com.ysn.footballclub_dicoding.matches.activitiy.searchmatch
@@ -10,8 +10,7 @@ package com.ysn.footballclub_dicoding.matches.activitiy.searchmatch
 import com.google.gson.Gson
 import com.ysn.footballclub_dicoding.api.ApiRepository
 import com.ysn.footballclub_dicoding.api.TheSportDbApi
-import com.ysn.footballclub_dicoding.model.League
-import com.ysn.footballclub_dicoding.model.SearchLeague
+import com.ysn.footballclub_dicoding.model.matches.SearchLeagueMatches
 import com.ysn.footballclub_dicoding.util.CoroutineContextProvider
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
@@ -27,9 +26,9 @@ class SearchMatchesPresenter(private val view: SearchMatchesView,
         async(context.main) {
             val dataApi = bg {
                 gson.fromJson(apiRepository.doRequest(TheSportDbApi.searchEventByKeyword(keyword = keyword)),
-                        SearchLeague::class.java)
+                        SearchLeagueMatches::class.java)
             }
-            view.searchEventByClubName(events = dataApi.await()!!.event)
+            view.searchEventByClubName(eventMatches = dataApi.await()!!.eventMatches)
         }
     }
 

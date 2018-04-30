@@ -1,8 +1,8 @@
 /*
- * Created by YSN Studio on 4/26/18 11:09 PM
+ * Created by YSN Studio on 4/30/18 10:22 PM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/26/18 10:45 PM
+ * Last modified 4/30/18 9:34 PM
  */
 
 package com.ysn.footballclub_dicoding.matches.activitiy.detailmatch
@@ -18,9 +18,9 @@ import com.ysn.footballclub_dicoding.R
 import com.ysn.footballclub_dicoding.api.ApiRepository
 import com.ysn.footballclub_dicoding.db.EntityEvent
 import com.ysn.footballclub_dicoding.db.database
-import com.ysn.footballclub_dicoding.model.Event
-import com.ysn.footballclub_dicoding.model.EventSearchLeague
-import com.ysn.footballclub_dicoding.model.Team
+import com.ysn.footballclub_dicoding.model.matches.EventMatches
+import com.ysn.footballclub_dicoding.model.matches.EventSearchLeagueMatches
+import com.ysn.footballclub_dicoding.model.matches.TeamMatches
 import kotlinx.android.synthetic.main.activity_detail_match.*
 import org.jetbrains.anko.db.delete
 import org.jetbrains.anko.db.insert
@@ -32,7 +32,7 @@ class DetailMatchActivity : AppCompatActivity(), DetailMatchView {
     private val TAG = javaClass.simpleName
 
     private lateinit var presenter: DetailMatchPresenter
-    private lateinit var event: Event
+    private lateinit var eventMatches: EventMatches
     private lateinit var apiRepository: ApiRepository
     private lateinit var gson: Gson
     private lateinit var idHomeTeam: String
@@ -92,30 +92,30 @@ class DetailMatchActivity : AppCompatActivity(), DetailMatchView {
     private fun addFavoriteMatch() {
         database.use {
             insert(EntityEvent.TABLE_EVENT,
-                    EntityEvent.ID_EVENT to event.idEvent,
-                    EntityEvent.DATE_EVENT to event.dateEvent,
-                    EntityEvent.ID_HOME_TEAM to event.idHomeTeam,
-                    EntityEvent.ID_AWAY_TEAM to event.idAwayTeam,
-                    EntityEvent.INT_HOME_SCORE to event.intHomeScore,
-                    EntityEvent.INT_AWAY_SCORE to event.intAwayScore,
-                    EntityEvent.STR_HOME_TEAM to event.strHomeTeam,
-                    EntityEvent.STR_AWAY_TEAM to event.strAwayTeam,
-                    EntityEvent.STR_HOME_FORMATION to event.strHomeFormation,
-                    EntityEvent.STR_AWAY_FORMATION to event.strAwayFormation,
-                    EntityEvent.STR_HOME_GOAL_DETAILS to event.strHomeGoalDetails,
-                    EntityEvent.STR_AWAY_GOAL_DETAILS to event.strAwayGoalDetails,
-                    EntityEvent.INT_HOME_SHOTS to event.intHomeShots,
-                    EntityEvent.INT_AWAY_SHOTS to event.intAwayShots,
-                    EntityEvent.STR_HOME_LINEUP_GOAL_KEEPER to event.strHomeLineupGoalkeeper,
-                    EntityEvent.STR_AWAY_LINEUP_GOAL_KEEPER to event.strAwayLineupGoalkeeper,
-                    EntityEvent.STR_HOME_LINEUP_DEFENSE to event.strHomeLineupDefense,
-                    EntityEvent.STR_AWAY_LINEUP_DEFENSE to event.strAwayLineupDefense,
-                    EntityEvent.STR_HOME_LINEUP_MIDFIELD to event.strHomeLineupMidfield,
-                    EntityEvent.STR_AWAY_LINEUP_MIDFIELD to event.strAwayLineupMidfield,
-                    EntityEvent.STR_HOME_LINEUP_FORWARD to event.strHomeLineupForward,
-                    EntityEvent.STR_AWAY_LINEUP_FORWARD to event.strAwayLineupForward,
-                    EntityEvent.STR_HOME_LINEUP_SUBSTITUTES to event.strHomeLineupSubstitutes,
-                    EntityEvent.STR_AWAY_LINEUP_SUBSTITUTES to event.strAwayLineupSubstitutes
+                    EntityEvent.ID_EVENT to eventMatches.idEvent,
+                    EntityEvent.DATE_EVENT to eventMatches.dateEvent,
+                    EntityEvent.ID_HOME_TEAM to eventMatches.idHomeTeam,
+                    EntityEvent.ID_AWAY_TEAM to eventMatches.idAwayTeam,
+                    EntityEvent.INT_HOME_SCORE to eventMatches.intHomeScore,
+                    EntityEvent.INT_AWAY_SCORE to eventMatches.intAwayScore,
+                    EntityEvent.STR_HOME_TEAM to eventMatches.strHomeTeam,
+                    EntityEvent.STR_AWAY_TEAM to eventMatches.strAwayTeam,
+                    EntityEvent.STR_HOME_FORMATION to eventMatches.strHomeFormation,
+                    EntityEvent.STR_AWAY_FORMATION to eventMatches.strAwayFormation,
+                    EntityEvent.STR_HOME_GOAL_DETAILS to eventMatches.strHomeGoalDetails,
+                    EntityEvent.STR_AWAY_GOAL_DETAILS to eventMatches.strAwayGoalDetails,
+                    EntityEvent.INT_HOME_SHOTS to eventMatches.intHomeShots,
+                    EntityEvent.INT_AWAY_SHOTS to eventMatches.intAwayShots,
+                    EntityEvent.STR_HOME_LINEUP_GOAL_KEEPER to eventMatches.strHomeLineupGoalkeeper,
+                    EntityEvent.STR_AWAY_LINEUP_GOAL_KEEPER to eventMatches.strAwayLineupGoalkeeper,
+                    EntityEvent.STR_HOME_LINEUP_DEFENSE to eventMatches.strHomeLineupDefense,
+                    EntityEvent.STR_AWAY_LINEUP_DEFENSE to eventMatches.strAwayLineupDefense,
+                    EntityEvent.STR_HOME_LINEUP_MIDFIELD to eventMatches.strHomeLineupMidfield,
+                    EntityEvent.STR_AWAY_LINEUP_MIDFIELD to eventMatches.strAwayLineupMidfield,
+                    EntityEvent.STR_HOME_LINEUP_FORWARD to eventMatches.strHomeLineupForward,
+                    EntityEvent.STR_AWAY_LINEUP_FORWARD to eventMatches.strAwayLineupForward,
+                    EntityEvent.STR_HOME_LINEUP_SUBSTITUTES to eventMatches.strHomeLineupSubstitutes,
+                    EntityEvent.STR_AWAY_LINEUP_SUBSTITUTES to eventMatches.strAwayLineupSubstitutes
             )
             isAlreadyDataInLocal = true
             menu.findItem(R.id.menu_item_add_favorite_menu_detail_match)
@@ -128,7 +128,7 @@ class DetailMatchActivity : AppCompatActivity(), DetailMatchView {
         database.use {
             delete(EntityEvent.TABLE_EVENT,
                     "(${EntityEvent.ID_EVENT} = {idEvent})",
-                    "idEvent" to event.idEvent)
+                    "idEvent" to eventMatches.idEvent)
         }
         isAlreadyDataInLocal = false
         menu.findItem(R.id.menu_item_add_favorite_menu_detail_match)
@@ -144,13 +144,13 @@ class DetailMatchActivity : AppCompatActivity(), DetailMatchView {
 
     private fun doLoadData() {
         val bundle = intent.extras
-        if (bundle.containsKey("event")) {
-            val dataEvent = bundle?.getSerializable("event")
-            if (dataEvent is Event) {
-                event = bundle.getSerializable("event") as Event
+        if (bundle.containsKey("eventMatches")) {
+            val dataEvent = bundle?.getSerializable("eventMatches")
+            if (dataEvent is EventMatches) {
+                eventMatches = bundle.getSerializable("eventMatches") as EventMatches
             } else {
-                val eventSearchLeague = bundle.getSerializable("event") as EventSearchLeague
-                event = Event(
+                val eventSearchLeague = bundle.getSerializable("eventMatches") as EventSearchLeagueMatches
+                eventMatches = EventMatches(
                         idEvent = eventSearchLeague.idEvent,
                         dateEvent = eventSearchLeague.dateEvent,
                         idHomeTeam = eventSearchLeague.idHomeTeam,
@@ -179,7 +179,7 @@ class DetailMatchActivity : AppCompatActivity(), DetailMatchView {
             }
         } else {
             val entityEvent = bundle.getSerializable("entityEvent") as EntityEvent
-            event = Event(
+            eventMatches = EventMatches(
                     idEvent = entityEvent.idEvent!!,
                     dateEvent = entityEvent.dateEvent!!,
                     idHomeTeam = entityEvent.idHomeTeam!!,
@@ -206,17 +206,17 @@ class DetailMatchActivity : AppCompatActivity(), DetailMatchView {
                     strAwayLineupSubstitutes = entityEvent.strAwayLineupSubstitutes
             )
         }
-        idHomeTeam = event.idHomeTeam
-        idAwayTeam = event.idAwayTeam
+        idHomeTeam = eventMatches.idHomeTeam
+        idAwayTeam = eventMatches.idAwayTeam
         loadDataLocal()
     }
 
-    override fun loadImageClub(homeLogo: ArrayList<Team>, awayLogo: ArrayList<Team>) {
+    override fun loadImageClub(homeLogos: ArrayList<TeamMatches>, awayLogos: ArrayList<TeamMatches>) {
         Glide.with(this)
-                .load(homeLogo[0].strTeamBadge)
+                .load(homeLogos[0].strTeamBadge)
                 .into(image_view_home_activity_detail_match)
         Glide.with(this)
-                .load(awayLogo[0].strTeamBadge)
+                .load(awayLogos[0].strTeamBadge)
                 .into(image_view_away_activity_detail_match)
     }
 
@@ -224,7 +224,7 @@ class DetailMatchActivity : AppCompatActivity(), DetailMatchView {
         database.use {
             select(EntityEvent.TABLE_EVENT)
                     .whereArgs("(${EntityEvent.ID_EVENT} = {idEvent})",
-                            "idEvent" to event.idEvent).exec {
+                            "idEvent" to eventMatches.idEvent).exec {
                         this@DetailMatchActivity.count = count
                         setupData()
                     }
@@ -236,44 +236,44 @@ class DetailMatchActivity : AppCompatActivity(), DetailMatchView {
         presenter.onLoadImageClub(idHomeTeam = idHomeTeam, idAwayTeam = idAwayTeam)
 
         // load data score
-        text_view_home_score_activity_detail_match.text = event.intHomeScore
-        text_view_away_score_activity_detail_match.text = event.intAwayScore
+        text_view_home_score_activity_detail_match.text = eventMatches.intHomeScore
+        text_view_away_score_activity_detail_match.text = eventMatches.intAwayScore
 
         // load data club name
-        text_view_home_club_name_activity_detail_match.text = event.strHomeTeam
-        text_view_away_club_name_activity_detail_match.text = event.strAwayTeam
+        text_view_home_club_name_activity_detail_match.text = eventMatches.strHomeTeam
+        text_view_away_club_name_activity_detail_match.text = eventMatches.strAwayTeam
 
         // load data formation
-        text_view_home_formation_activity_detail_match.text = event.strHomeFormation
-        text_view_away_formation_activity_detail_match.text = event.strAwayFormation
+        text_view_home_formation_activity_detail_match.text = eventMatches.strHomeFormation
+        text_view_away_formation_activity_detail_match.text = eventMatches.strAwayFormation
 
         // load data goals
-        text_view_home_goal_activity_detail_match.text = event.strHomeGoalDetails?.replace(";", "\n")
-        text_view_away_goal_activity_detail_match.text = event.strAwayGoalDetails?.replace(";", "\n")
+        text_view_home_goal_activity_detail_match.text = eventMatches.strHomeGoalDetails?.replace(";", "\n")
+        text_view_away_goal_activity_detail_match.text = eventMatches.strAwayGoalDetails?.replace(";", "\n")
 
         // load data shots
-        text_view_home_shot_activity_detail_match.text = event.intHomeShots
-        text_view_away_shot_activity_detail_match.text = event.intAwayShots
+        text_view_home_shot_activity_detail_match.text = eventMatches.intHomeShots
+        text_view_away_shot_activity_detail_match.text = eventMatches.intAwayShots
 
         // load data goalkeeper
-        text_view_home_goalkeeper_activity_detail_match.text = event.strHomeLineupGoalkeeper?.replace(";", "\n")
-        text_view_away_goalkeeper_activity_detail_match.text = event.strAwayLineupGoalkeeper?.replace(";", "\n")
+        text_view_home_goalkeeper_activity_detail_match.text = eventMatches.strHomeLineupGoalkeeper?.replace(";", "\n")
+        text_view_away_goalkeeper_activity_detail_match.text = eventMatches.strAwayLineupGoalkeeper?.replace(";", "\n")
 
         // load data defense
-        text_view_home_defense_activity_detail_match.text = event.strHomeLineupDefense?.replace(";", "\n")
-        text_view_away_defense_activity_detail_match.text = event.strAwayLineupDefense?.replace(";", "\n")
+        text_view_home_defense_activity_detail_match.text = eventMatches.strHomeLineupDefense?.replace(";", "\n")
+        text_view_away_defense_activity_detail_match.text = eventMatches.strAwayLineupDefense?.replace(";", "\n")
 
         // load data midfield
-        text_view_home_midfield_activity_detail_match.text = event.strHomeLineupMidfield?.replace(";", "\n")
-        text_view_away_midfield_activity_detail_match.text = event.strAwayLineupMidfield?.replace(";", "\n")
+        text_view_home_midfield_activity_detail_match.text = eventMatches.strHomeLineupMidfield?.replace(";", "\n")
+        text_view_away_midfield_activity_detail_match.text = eventMatches.strAwayLineupMidfield?.replace(";", "\n")
 
         // load data forward
-        text_view_home_forward_activity_detail_match.text = event.strHomeLineupForward?.replace(";", "\n")
-        text_view_away_forward_activity_detail_match.text = event.strAwayLineupForward?.replace(";", "\n")
+        text_view_home_forward_activity_detail_match.text = eventMatches.strHomeLineupForward?.replace(";", "\n")
+        text_view_away_forward_activity_detail_match.text = eventMatches.strAwayLineupForward?.replace(";", "\n")
 
         // load data substitutes
-        text_view_home_substitutes_activity_detail_match.text = event.strHomeLineupSubstitutes?.replace(";", "\n")
-        text_view_away_substitutes_activity_detail_match.text = event.strAwayLineupSubstitutes?.replace(";", "\n")
+        text_view_home_substitutes_activity_detail_match.text = eventMatches.strHomeLineupSubstitutes?.replace(";", "\n")
+        text_view_away_substitutes_activity_detail_match.text = eventMatches.strAwayLineupSubstitutes?.replace(";", "\n")
         hideLoading()
     }
 

@@ -1,8 +1,8 @@
 /*
- * Created by YSN Studio on 4/26/18 8:08 AM
+ * Created by YSN Studio on 4/30/18 10:22 PM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/26/18 8:07 AM
+ * Last modified 4/30/18 9:34 PM
  */
 
 package com.ysn.footballclub_dicoding.matches.fragment.nextmatch.adapter
@@ -16,12 +16,12 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.ysn.footballclub_dicoding.R
-import com.ysn.footballclub_dicoding.model.Event
+import com.ysn.footballclub_dicoding.model.matches.EventMatches
 import org.jetbrains.anko.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AdapterNextMatch constructor(private var events: List<Event>,
+class AdapterNextMatch constructor(private var eventMatches: List<EventMatches>,
                                    private val listenerAdapterMatch: ListenerAdapterMatch) : RecyclerView.Adapter<AdapterNextMatch.ViewHolderItemNextMatch>() {
 
     private val TAG = javaClass.simpleName
@@ -35,7 +35,7 @@ class AdapterNextMatch constructor(private var events: List<Event>,
     }
 
     override fun onBindViewHolder(holder: ViewHolderItemNextMatch, position: Int) {
-        val event = events[position]
+        val event = eventMatches[position]
         val timestampDateEvent = SimpleDateFormat("yyyy-MM-dd", Locale.US).parse(event.dateEvent)
         val dateSchedule = SimpleDateFormat("EEE, dd MMM yyyy", Locale.US).format(timestampDateEvent)
         holder.textViewDateSchedule.text = dateSchedule
@@ -43,10 +43,10 @@ class AdapterNextMatch constructor(private var events: List<Event>,
         holder.textViewAwayClubName.text = event.strAwayTeam
     }
 
-    override fun getItemCount(): Int = events.size
+    override fun getItemCount(): Int = eventMatches.size
 
-    fun refreshData(events: List<Event>) {
-        this.events = events
+    fun refreshData(eventMatches: List<EventMatches>) {
+        this.eventMatches = eventMatches
         notifyDataSetChanged()
     }
 
@@ -62,19 +62,19 @@ class AdapterNextMatch constructor(private var events: List<Event>,
 
         init {
             relativeLayoutContainerItemNextMatch.setOnClickListener {
-                listenerAdapterMatch.onClickItemMatch(event = events[adapterPosition])
+                listenerAdapterMatch.onClickItemMatch(eventMatches = eventMatches[adapterPosition])
             }
             imageViewAddEventCalendarItemNextMatch.setOnClickListener {
-                listenerAdapterMatch.onAddMatchToCalendarEvent(event = events[adapterPosition])
+                listenerAdapterMatch.onAddMatchToCalendarEvent(eventMatches = eventMatches[adapterPosition])
             }
         }
     }
 
     interface ListenerAdapterMatch {
 
-        fun onClickItemMatch(event: Event)
+        fun onClickItemMatch(eventMatches: EventMatches)
 
-        fun onAddMatchToCalendarEvent(event: Event)
+        fun onAddMatchToCalendarEvent(eventMatches: EventMatches)
 
     }
 

@@ -1,8 +1,8 @@
 /*
- * Created by YSN Studio on 4/26/18 3:27 AM
+ * Created by YSN Studio on 4/30/18 10:22 PM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/25/18 4:09 PM
+ * Last modified 4/30/18 9:34 PM
  */
 
 package com.ysn.footballclub_dicoding.matches.fragment.previousmatch.adapter
@@ -14,12 +14,12 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.ysn.footballclub_dicoding.R
-import com.ysn.footballclub_dicoding.model.Event
+import com.ysn.footballclub_dicoding.model.matches.EventMatches
 import org.jetbrains.anko.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AdapterPreviousMatch constructor(private var events: List<Event>,
+class AdapterPreviousMatch constructor(private var eventMatches: List<EventMatches>,
                                        private val listenerAdapterMatch: ListenerAdapterMatch) : RecyclerView.Adapter<AdapterPreviousMatch.ViewHolderItemPreviousMatch>() {
 
     private val TAG = javaClass.simpleName
@@ -33,7 +33,7 @@ class AdapterPreviousMatch constructor(private var events: List<Event>,
     }
 
     override fun onBindViewHolder(holder: ViewHolderItemPreviousMatch, position: Int) {
-        val event = events[position]
+        val event = eventMatches[position]
         val timestampDateEvent = SimpleDateFormat("yyyy-MM-dd", Locale.US).parse(event.dateEvent)
         val dateSchedule = SimpleDateFormat("EEE, dd MMM yyyy", Locale.US).format(timestampDateEvent)
         holder.textViewDateSchedule.text = dateSchedule
@@ -43,12 +43,12 @@ class AdapterPreviousMatch constructor(private var events: List<Event>,
         holder.textViewAwayClubName.text = event.strAwayTeam
     }
 
-    fun refreshData(events: List<Event>) {
-        this.events = events
+    fun refreshData(eventMatches: List<EventMatches>) {
+        this.eventMatches = eventMatches
         notifyDataSetChanged()
     }
 
-    override fun getItemCount(): Int = events.size
+    override fun getItemCount(): Int = eventMatches.size
 
     inner class ViewHolderItemPreviousMatch constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -62,7 +62,7 @@ class AdapterPreviousMatch constructor(private var events: List<Event>,
 
         init {
             relativeLayoutContainerItmePreviousMatch.setOnClickListener {
-                listenerAdapterMatch.onClickItemMatch(event = events[adapterPosition])
+                listenerAdapterMatch.onClickItemMatch(eventMatches = eventMatches[adapterPosition])
             }
         }
 
@@ -70,7 +70,7 @@ class AdapterPreviousMatch constructor(private var events: List<Event>,
 
     interface ListenerAdapterMatch {
 
-        fun onClickItemMatch(event: Event)
+        fun onClickItemMatch(eventMatches: EventMatches)
 
     }
 

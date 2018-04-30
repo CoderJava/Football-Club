@@ -1,8 +1,8 @@
 /*
- * Created by YSN Studio on 4/26/18 11:09 PM
+ * Created by YSN Studio on 4/30/18 10:22 PM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/26/18 11:08 PM
+ * Last modified 4/30/18 9:34 PM
  */
 
 package com.ysn.footballclub_dicoding.matches.activitiy.searchmatch
@@ -17,7 +17,7 @@ import com.ysn.footballclub_dicoding.R
 import com.ysn.footballclub_dicoding.api.ApiRepository
 import com.ysn.footballclub_dicoding.matches.activitiy.detailmatch.DetailMatchActivity
 import com.ysn.footballclub_dicoding.matches.activitiy.searchmatch.adapter.AdapterSearchMatches
-import com.ysn.footballclub_dicoding.model.EventSearchLeague
+import com.ysn.footballclub_dicoding.model.matches.EventSearchLeagueMatches
 import kotlinx.android.synthetic.main.activity_search_matches.*
 import org.jetbrains.anko.*
 
@@ -25,7 +25,7 @@ class SearchMatchesActivity : AppCompatActivity(), SearchMatchesView {
 
     private val TAG = javaClass.simpleName
 
-    private var events: MutableList<EventSearchLeague> = mutableListOf()
+    private var eventMatches: MutableList<EventSearchLeagueMatches> = mutableListOf()
     private lateinit var adapterSearchMatches: AdapterSearchMatches
     private lateinit var presenter: SearchMatchesPresenter
     private lateinit var apiRepository: ApiRepository
@@ -82,26 +82,26 @@ class SearchMatchesActivity : AppCompatActivity(), SearchMatchesView {
 
     private fun setupAdapterSearchMatches() {
         swipe_refresh_layout_activity_search_matches.isEnabled = false
-        adapterSearchMatches = AdapterSearchMatches(events = events, listenerADapterSearchMatch = object : AdapterSearchMatches.ListenerAdapterSearchesMatches {
-            override fun onClickItemMatch(event: EventSearchLeague) {
-                doOnClickItemMatch(event = event)
+        adapterSearchMatches = AdapterSearchMatches(eventMatches = eventMatches, listenerADapterSearchMatch = object : AdapterSearchMatches.ListenerAdapterSearchesMatches {
+            override fun onClickItemMatch(eventMatches: EventSearchLeagueMatches) {
+                doOnClickItemMatch(eventMatches = eventMatches)
             }
         })
         recycler_view_search_activity_search_matches.layoutManager = LinearLayoutManager(ctx)
         recycler_view_search_activity_search_matches.adapter = adapterSearchMatches
     }
 
-    private fun doOnClickItemMatch(event: EventSearchLeague) {
-        val intentDetailMatchActivity = intentFor<DetailMatchActivity>("event" to event)
+    private fun doOnClickItemMatch(eventMatches: EventSearchLeagueMatches) {
+        val intentDetailMatchActivity = intentFor<DetailMatchActivity>("eventMatches" to eventMatches)
         startActivity(intentDetailMatchActivity)
     }
 
-    override fun searchEventByClubName(events: List<EventSearchLeague>) {
+    override fun searchEventByClubName(eventMatches: List<EventSearchLeagueMatches>) {
         AnkoLogger(TAG).info { "searchEventByClubName" }
         hideLoading()
-        this.events.clear()
-        this.events.addAll(events)
-        adapterSearchMatches.refreshData(this.events)
+        this.eventMatches.clear()
+        this.eventMatches.addAll(eventMatches)
+        adapterSearchMatches.refreshData(this.eventMatches)
     }
 
 }

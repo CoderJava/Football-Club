@@ -1,8 +1,8 @@
 /*
- * Created by YSN Studio on 4/26/18 11:09 PM
+ * Created by YSN Studio on 4/30/18 10:22 PM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/26/18 10:38 PM
+ * Last modified 4/30/18 9:34 PM
  */
 
 package com.ysn.footballclub_dicoding.matches.activitiy.searchmatch.adapter
@@ -14,13 +14,12 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.ysn.footballclub_dicoding.R
-import com.ysn.footballclub_dicoding.model.Event
-import com.ysn.footballclub_dicoding.model.EventSearchLeague
+import com.ysn.footballclub_dicoding.model.matches.EventSearchLeagueMatches
 import org.jetbrains.anko.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AdapterSearchMatches constructor(private var events: List<EventSearchLeague>,
+class AdapterSearchMatches constructor(private var eventMatches: List<EventSearchLeagueMatches>,
                                        private val listenerADapterSearchMatch: ListenerAdapterSearchesMatches) : RecyclerView.Adapter<AdapterSearchMatches.ViewHolderItemSearchMatch>() {
 
     private val TAG = javaClass.simpleName
@@ -34,7 +33,7 @@ class AdapterSearchMatches constructor(private var events: List<EventSearchLeagu
     }
 
     override fun onBindViewHolder(holder: ViewHolderItemSearchMatch, position: Int) {
-        val event = events[position]
+        val event = eventMatches[position]
         val timestampDateEvent = SimpleDateFormat("yyyy-MM-dd", Locale.US)
                 .parse(event.dateEvent)
         val dateSchedule = SimpleDateFormat("EEE, dd MMM yyyy", Locale.US)
@@ -46,10 +45,10 @@ class AdapterSearchMatches constructor(private var events: List<EventSearchLeagu
         holder.textViewAwayClubName.text = event.strAwayTeam
     }
 
-    override fun getItemCount(): Int = events.size
+    override fun getItemCount(): Int = eventMatches.size
 
-    fun refreshData(events: List<EventSearchLeague>) {
-        this.events = events
+    fun refreshData(eventMatches: List<EventSearchLeagueMatches>) {
+        this.eventMatches = eventMatches
         notifyDataSetChanged()
     }
 
@@ -65,14 +64,14 @@ class AdapterSearchMatches constructor(private var events: List<EventSearchLeagu
 
         init {
             relativeLayoutContainerItemSearchMatch.setOnClickListener {
-                listenerADapterSearchMatch.onClickItemMatch(event = events[adapterPosition])
+                listenerADapterSearchMatch.onClickItemMatch(eventMatches = eventMatches[adapterPosition])
             }
         }
     }
 
     interface ListenerAdapterSearchesMatches {
 
-        fun onClickItemMatch(event: EventSearchLeague)
+        fun onClickItemMatch(eventMatches: EventSearchLeagueMatches)
 
     }
 

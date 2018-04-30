@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Created by YSN Studio on 4/30/18 10:22 PM
+  ~ Copyright (c) 2018. All rights reserved.
+  ~
+  ~ Last modified 4/30/18 10:22 PM
+  -->
+
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".teams.detailteam.DetailTeamActivity">
+
+</android.support.constraint.ConstraintLayout>
