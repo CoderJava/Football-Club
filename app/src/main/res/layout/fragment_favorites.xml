@@ -1,20 +1,28 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~ Created by YSN Studio on 4/24/18 1:57 AM
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Created by YSN Studio on 5/1/18 11:50 PM
   ~ Copyright (c) 2018. All rights reserved.
   ~
-  ~ Last modified 4/24/18 12:12 AM
+  ~ Last modified 5/1/18 9:18 PM
   -->
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".favorites.FavoritesFragment">
 
-    <TextView
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout_fragment_favorites"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabGravity="fill"
+        app:tabMode="fixed" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager_fragment_favorites"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/title_favorites" />
+        android:layout_below="@+id/tab_layout_fragment_favorites" />
 
-</FrameLayout>
+</RelativeLayout>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Created by YSN Studio on 5/1/18 5:34 PM
+  ~ Created by YSN Studio on 5/1/18 11:50 PM
   ~ Copyright (c) 2018. All rights reserved.
   ~
-  ~ Last modified 5/1/18 5:26 PM
+  ~ Last modified 5/1/18 11:17 PM
   -->
 
 <resources>
@@ -55,4 +55,14 @@
     <item name="image_view_logo_club_item_search_team" type="id" />
     <item name="text_view_club_name_item_search_team" type="id" />
     <item name="relative_layout_container_item_search_team" type="id" />
+    <item name="text_view_date_schedule_item_favorite_match" type="id" />
+    <item name="text_view_label_vs_item_favorite_match" type="id" />
+    <item name="text_view_home_score_item_favorite_match" type="id" />
+    <item name="text_view_away_score_item_favorite_match" type="id" />
+    <item name="text_view_home_club_name_item_favorite_match" type="id" />
+    <item name="text_view_away_club_name_item_favorite_match" type="id" />
+    <item name="relative_layout_container_item_favorite_match" type="id" />
+    <item name="image_view_logo_club_item_favorite_team" type="id" />
+    <item name="text_view_club_name_item_favorite_team" type="id" />
+    <item name="relative_layout_container_item_favorite_team" type="id" />
 </resources>

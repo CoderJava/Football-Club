@@ -1,8 +1,8 @@
 /*
- * Created by YSN Studio on 4/25/18 3:14 PM
+ * Created by YSN Studio on 5/1/18 11:50 PM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/25/18 2:49 PM
+ * Last modified 5/1/18 6:05 PM
  */
 
 package com.ysn.footballclub_dicoding.db
@@ -26,6 +26,11 @@ class DatabaseOpenHelper constructor(ctx: Context) : ManagedSQLiteOpenHelper(ctx
     }
 
     override fun onCreate(db: SQLiteDatabase) {
+        createTableEvent(db)
+        createTableTeam(db)
+    }
+
+    private fun createTableEvent(db: SQLiteDatabase) {
         db.createTable(EntityEvent.TABLE_EVENT, true,
                 EntityEvent.ID_EVENT to TEXT + PRIMARY_KEY,
                 EntityEvent.DATE_EVENT to TEXT,
@@ -54,8 +59,21 @@ class DatabaseOpenHelper constructor(ctx: Context) : ManagedSQLiteOpenHelper(ctx
         )
     }
 
+    private fun createTableTeam(db: SQLiteDatabase) {
+        db.createTable(EntityTeam.TABLE_TEAM, true,
+                EntityTeam.ID_TEAM to TEXT + PRIMARY_KEY,
+                EntityTeam.STR_TEAM to TEXT,
+                EntityTeam.STR_ALTERNATE to TEXT,
+                EntityTeam.INT_FORMED_YEAR to TEXT,
+                EntityTeam.STR_STADIUM to TEXT,
+                EntityTeam.STR_DESCRIPTION_EN to TEXT,
+                EntityTeam.STR_COUNTRY to TEXT,
+                EntityTeam.STR_TEAM_BADGE to TEXT)
+    }
+
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         db.dropIndex(EntityEvent.TABLE_EVENT, true)
+        db.dropIndex(EntityTeam.TABLE_TEAM, true)
     }
 
 }

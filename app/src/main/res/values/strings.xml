@@ -1,8 +1,8 @@
 <!--
-  ~ Created by YSN Studio on 5/1/18 4:32 PM
+  ~ Created by YSN Studio on 5/1/18 11:50 PM
   ~ Copyright (c) 2018. All rights reserved.
   ~
-  ~ Last modified 5/1/18 5:00 AM
+  ~ Last modified 5/1/18 9:46 PM
   -->
 
 <resources>
@@ -44,6 +44,8 @@
     <string name="title_player">Player</string>
     <string name="label_weight">Weight (Kg)</string>
     <string name="label_height">Height (m)</string>
+    <string name="title_favorite_match">Favorite Match</string>
+    <string name="title_favorite_team">Favorite Team</string>
     <string-array name="array_league">
         <item>English Premier League</item> <!--4328-->
         <item>English League championship</item> <!--4329-->
