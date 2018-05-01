@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Created by YSN Studio on 4/30/18 10:22 PM
+  ~ Created by YSN Studio on 5/1/18 4:32 PM
   ~ Copyright (c) 2018. All rights reserved.
   ~
-  ~ Last modified 4/30/18 10:22 PM
+  ~ Last modified 5/1/18 4:46 AM
   -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ysn.footballclub_dicoding">
@@ -28,7 +28,10 @@
         <activity
             android:name=".matches.activitiy.searchmatch.SearchMatchesActivity"
             android:theme="@style/AppThemeWithoutToolbar" />
-        <activity android:name=".teams.detailteam.DetailTeamActivity"></activity>
+        <activity
+            android:name=".teams.activity.detailteam.DetailTeamActivity"
+            android:theme="@style/AppThemeWithoutToolbar" />
+        <activity android:name=".teams.activity.detailplayer.DetailPlayerActivity"></activity>
     </application>
 
 </manifest>

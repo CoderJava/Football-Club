@@ -1,8 +1,8 @@
 /*
- * Created by YSN Studio on 4/30/18 10:22 PM
+ * Created by YSN Studio on 5/1/18 4:32 PM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/30/18 10:22 PM
+ * Last modified 4/30/18 10:53 PM
  */
 
 package com.ysn.footballclub_dicoding.teams
@@ -22,7 +22,7 @@ import com.ysn.footballclub_dicoding.api.ApiRepository
 import com.ysn.footballclub_dicoding.model.teams.AllTeamItem
 import com.ysn.footballclub_dicoding.selectleague.SelectLeagueMatchActivity
 import com.ysn.footballclub_dicoding.teams.adapter.AdapterTeams
-import com.ysn.footballclub_dicoding.teams.detailteam.DetailTeamActivity
+import com.ysn.footballclub_dicoding.teams.activity.detailteam.DetailTeamActivity
 import kotlinx.android.synthetic.main.fragment_teams.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.intentFor

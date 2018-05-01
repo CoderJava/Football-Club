@@ -1,8 +1,8 @@
 <!--
-  ~ Created by YSN Studio on 4/26/18 11:09 PM
+  ~ Created by YSN Studio on 5/1/18 4:32 PM
   ~ Copyright (c) 2018. All rights reserved.
   ~
-  ~ Last modified 4/26/18 8:29 AM
+  ~ Last modified 5/1/18 5:00 AM
   -->
 
 <resources>
@@ -40,6 +40,10 @@
     <string name="search">Search</string>
     <string name="input_a_keyword">Input a keyword</string>
     <string name="image_view_icon_clear">image view icon clear</string>
+    <string name="title_overview">Overview</string>
+    <string name="title_player">Player</string>
+    <string name="label_weight">Weight (Kg)</string>
+    <string name="label_height">Height (m)</string>
     <string-array name="array_league">
         <item>English Premier League</item> <!--4328-->
         <item>English League championship</item> <!--4329-->

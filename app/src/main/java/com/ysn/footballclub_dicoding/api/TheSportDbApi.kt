@@ -1,8 +1,8 @@
 /*
- * Created by YSN Studio on 4/30/18 10:22 PM
+ * Created by YSN Studio on 5/1/18 4:32 PM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/30/18 10:07 PM
+ * Last modified 5/1/18 4:31 AM
  */
 
 package com.ysn.footballclub_dicoding.api
@@ -33,6 +33,10 @@ object TheSportDbApi {
 
     fun getAllTeamsByLeague(idLeague: String): String {
         return "${BuildConfig.BASE_URL}lookup_all_teams.php?id=$idLeague"
+    }
+
+    fun getAllPlayersByTeam(idTeam: String): String {
+        return "${BuildConfig.BASE_URL}lookup_all_players.php?id=$idTeam"
     }
 
 }

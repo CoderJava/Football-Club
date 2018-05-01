@@ -1,16 +1,80 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~ Created by YSN Studio on 4/30/18 10:22 PM
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Created by YSN Studio on 5/1/18 4:32 PM
   ~ Copyright (c) 2018. All rights reserved.
   ~
-  ~ Last modified 4/30/18 10:22 PM
+  ~ Last modified 4/30/18 11:33 PM
   -->
 
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".teams.detailteam.DetailTeamActivity">
+    android:orientation="vertical"
+    tools:context=".teams.activity.detailteam.DetailTeamActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_activity_detail_team"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/colorPrimaryDark" />
+
+    <RelativeLayout
+        android:id="@+id/relative_layout_container_activity_detail_team"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryDark">
+
+        <ImageView
+            android:id="@+id/image_view_logo_club_activity_detail_team"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="@string/image_view_logo_club" />
+
+        <TextView
+            android:id="@+id/text_view_club_name_activity_detail_team"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/image_view_logo_club_activity_detail_team"
+            android:layout_centerHorizontal="true"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/text_view_formed_year_club_activity_detail_team"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_view_club_name_activity_detail_team"
+            android:layout_centerHorizontal="true"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/text_view_alternate_name_club_activity_detail_team"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_view_formed_year_club_activity_detail_team"
+            android:layout_centerHorizontal="true"
+            android:textColor="@android:color/white" />
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_layout_team_activity_detail_team"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_view_alternate_name_club_activity_detail_team"
+            android:background="@color/colorPrimaryDark"
+            app:tabTextColor="#aaaaaa"
+            app:tabSelectedTextColor="#ffffff"
+            app:tabGravity="fill"
+            app:tabMode="fixed" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/view_pager_team_activity_detail_team"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:layout_below="@+id/tab_layout_team_activity_detail_team" />
+
+    </RelativeLayout>
+
+</LinearLayout>
