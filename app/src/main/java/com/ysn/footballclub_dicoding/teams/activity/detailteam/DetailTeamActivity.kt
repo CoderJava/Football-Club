@@ -1,8 +1,8 @@
 /*
- * Created by YSN Studio on 5/1/18 4:32 PM
+ * Created by YSN Studio on 5/1/18 5:34 PM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 5/1/18 4:42 AM
+ * Last modified 5/1/18 4:34 PM
  */
 
 package com.ysn.footballclub_dicoding.teams.activity.detailteam
@@ -19,6 +19,7 @@ import com.ysn.footballclub_dicoding.teams.fragment.overviewteam.OverviewDetailT
 import com.ysn.footballclub_dicoding.teams.fragment.playerteam.PlayerDetailTeamFragment
 import kotlinx.android.synthetic.main.activity_detail_team.*
 import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.toolbar
 
 class DetailTeamActivity : AppCompatActivity(), AnkoLogger {
 
@@ -30,9 +31,15 @@ class DetailTeamActivity : AppCompatActivity(), AnkoLogger {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_team)
+        initToolbar()
         doLoadData()
         setupTabLayout()
         setupViewPager()
+    }
+
+    private fun initToolbar() {
+        setSupportActionBar(toolbar_activity_detail_team)
+        supportActionBar?.title = ""
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

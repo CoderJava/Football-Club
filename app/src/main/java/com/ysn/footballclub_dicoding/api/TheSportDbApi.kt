@@ -1,15 +1,13 @@
 /*
- * Created by YSN Studio on 5/1/18 4:32 PM
+ * Created by YSN Studio on 5/1/18 5:34 PM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 5/1/18 4:31 AM
+ * Last modified 5/1/18 5:27 PM
  */
 
 package com.ysn.footballclub_dicoding.api
 
 import com.ysn.footballclub_dicoding.BuildConfig
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
 
 object TheSportDbApi {
 
@@ -26,9 +24,7 @@ object TheSportDbApi {
     }
 
     fun searchEventByKeyword(keyword: String): String {
-        val endpoint = "${BuildConfig.BASE_URL}searchevents.php?e=$keyword"
-        AnkoLogger(javaClass.simpleName).info { "endpoint: $endpoint" }
-        return endpoint
+        return "${BuildConfig.BASE_URL}searchevents.php?e=$keyword"
     }
 
     fun getAllTeamsByLeague(idLeague: String): String {
@@ -37,6 +33,10 @@ object TheSportDbApi {
 
     fun getAllPlayersByTeam(idTeam: String): String {
         return "${BuildConfig.BASE_URL}lookup_all_players.php?id=$idTeam"
+    }
+
+    fun searchTeamByKeyword(keyword: String): String {
+        return "${BuildConfig.BASE_URL}searchteams.php?t=$keyword"
     }
 
 }

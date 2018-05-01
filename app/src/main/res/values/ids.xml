@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Created by YSN Studio on 5/1/18 4:32 PM
+  ~ Created by YSN Studio on 5/1/18 5:34 PM
   ~ Copyright (c) 2018. All rights reserved.
   ~
-  ~ Last modified 5/1/18 3:51 PM
+  ~ Last modified 5/1/18 5:26 PM
   -->
 
 <resources>
@@ -52,4 +52,7 @@
     <item name="text_view_position_detail_player" type="id" />
     <item name="swipe_refresh_layout_detail_player" type="id" />
     <item name="text_view_description_detail_player" type="id" />
+    <item name="image_view_logo_club_item_search_team" type="id" />
+    <item name="text_view_club_name_item_search_team" type="id" />
+    <item name="relative_layout_container_item_search_team" type="id" />
 </resources>

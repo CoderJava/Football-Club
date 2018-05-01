@@ -1,8 +1,8 @@
 /*
- * Created by YSN Studio on 4/29/18 10:50 PM
+ * Created by YSN Studio on 5/1/18 5:34 PM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/29/18 10:38 PM
+ * Last modified 5/1/18 5:30 PM
  */
 
 package com.ysn.footballclub_dicoding
@@ -15,6 +15,7 @@ import com.ysn.footballclub_dicoding.favorites.FavoritesFragment
 import com.ysn.footballclub_dicoding.matches.MatchesFragment
 import com.ysn.footballclub_dicoding.matches.activitiy.searchmatch.SearchMatchesActivity
 import com.ysn.footballclub_dicoding.teams.TeamsFragment
+import com.ysn.footballclub_dicoding.teams.activity.searchteam.SearchTeamsActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.intentFor
@@ -68,7 +69,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean = when(indexFragmentSelected) {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean = when (indexFragmentSelected) {
         0 -> {
             menuInflater.inflate(R.menu.menu_matches, menu)
             this.menu = menu
@@ -81,8 +82,19 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         R.id.menu_item_search_menu_matches -> {
-            val intentSearchMatches = intentFor<SearchMatchesActivity>()
-            startActivity(intentSearchMatches)
+            when (indexFragmentSelected) {
+                0 -> {
+                    val intentSearchMatches = intentFor<SearchMatchesActivity>()
+                    startActivity(intentSearchMatches)
+                }
+                1 -> {
+                    val intentSearchTeams = intentFor<SearchTeamsActivity>()
+                    startActivity(intentSearchTeams)
+                }
+                2 -> {
+                    /* nothing to do in here */
+                }
+            }
             true
         }
         else -> {
