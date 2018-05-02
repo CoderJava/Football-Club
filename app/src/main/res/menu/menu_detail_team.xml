@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Created by YSN Studio on 5/2/18 9:57 PM
+  ~ Copyright (c) 2018. All rights reserved.
+  ~
+  ~ Last modified 5/1/18 4:38 AM
+  -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_item_add_favorite_menu_detail_team"
+        android:icon="@drawable/ic_star_border_white_24dp"
+        android:title="@string/add_favorite"
+        app:showAsAction="always" />
+</menu>
