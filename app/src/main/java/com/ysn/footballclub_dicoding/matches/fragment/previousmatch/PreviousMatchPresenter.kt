@@ -1,8 +1,8 @@
 /*
- * Created by YSN Studio on 4/30/18 10:22 PM
+ * Created by YSN Studio on 5/2/18 8:46 PM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/30/18 9:34 PM
+ * Last modified 5/2/18 3:18 PM
  */
 
 package com.ysn.footballclub_dicoding.matches.fragment.previousmatch
@@ -15,7 +15,7 @@ import com.ysn.footballclub_dicoding.util.CoroutineContextProvider
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 
-class PreviousMatchPresenter constructor(private val view: PreviousMatchFragment,
+class PreviousMatchPresenter constructor(private val view: PreviousMatchView,
                                          private val apiRepository: ApiRepository,
                                          private val gson: Gson,
                                          private val context: CoroutineContextProvider = CoroutineContextProvider()) {
