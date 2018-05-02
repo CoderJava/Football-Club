@@ -1,18 +1,17 @@
 /*
- * Created by YSN Studio on 4/24/18 12:17 AM
+ * Created by YSN Studio on 5/2/18 9:58 PM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 4/23/18 11:43 PM
+ * Last modified 5/2/18 9:49 PM
  */
 
 package com.ysn.footballclub_dicoding
 
 import android.support.test.espresso.Espresso.onView
-import android.support.test.espresso.action.ViewActions.click
+import android.support.test.espresso.action.ViewActions.*
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.contrib.RecyclerViewActions
-import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
-import android.support.test.espresso.matcher.ViewMatchers.withId
+import android.support.test.espresso.matcher.ViewMatchers.*
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import android.support.v7.widget.RecyclerView
@@ -29,57 +28,116 @@ class MainActivityTest {
 
     @Test
     fun testRecyclerViewPreviousMatch() {
-        delay3Second()
-        onView(withId(R.id.recycler_view_previous_match_fragment))
+        delaySecond()
+        onView(withId(R.id.recycler_view_match_fragment_previous_match))
                 .check(matches(isDisplayed()))
-        onView(withId(R.id.recycler_view_previous_match_fragment))
+        onView(withId(R.id.recycler_view_match_fragment_previous_match))
                 .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(12))
-        onView(withId(R.id.recycler_view_previous_match_fragment))
+        onView(withId(R.id.recycler_view_match_fragment_previous_match))
                 .perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(12, click()))
-        delay3Second()
+        delaySecond()
         onView(withId(R.id.menu_item_add_favorite_menu_detail_match))
                 .perform(click())
-        delay3Second()
+        delaySecond()
     }
 
     @Test
     fun testRecyclerViewNextMatch() {
-        delay3Second()
-        onView(withId(R.id.bottom_navigation_view_activity_main))
+        delaySecond()
+        onView(withId(R.id.tab_layout_matches_fragment_match))
                 .check(matches(isDisplayed()))
-        onView(withId(R.id.navigation_teams))
+        onView(withText("Next Match"))
                 .perform(click())
-        delay3Second()
-        onView(withId(R.id.recycler_view_next_match_fragment))
-                .check(matches(isDisplayed()))
-        onView(withId(R.id.recycler_view_next_match_fragment))
-                .perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(14, click()))
-        delay3Second()
+        onView(withId(R.id.recycler_view_match_fragment_next_match))
+                .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(12))
+        onView(withId(R.id.recycler_view_match_fragment_next_match))
+                .perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(12, click()))
+        delaySecond()
         onView(withId(R.id.menu_item_add_favorite_menu_detail_match))
                 .perform(click())
-        delay3Second()
+        delaySecond()
     }
 
     @Test
-    fun testRecyclerFavoriteMatch() {
-        delay3Second()
-        onView(withId(R.id.bottom_navigation_view_activity_main))
+    fun testSearchingMatch() {
+        delaySecond()
+        onView(withId(R.id.menu_item_search_menu_matches))
                 .check(matches(isDisplayed()))
-        onView(withId(R.id.navigation_favorites))
+        onView(withId(R.id.menu_item_search_menu_matches))
                 .perform(click())
-        delay3Second()
-        onView(withId(R.id.recycler_view_favorite_match_fragment))
+        onView(withId(R.id.edit_text_keyword_activity_search_matches))
+                .perform(clearText(), typeText("Arsenal"))
+        onView(withId(R.id.edit_text_keyword_activity_search_matches))
+                .perform(pressImeActionButton())
+        delaySecond()
+        onView(withId(R.id.recycler_view_search_activity_search_matches))
                 .check(matches(isDisplayed()))
-        onView(withId(R.id.recycler_view_favorite_match_fragment))
-                .perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
-        delay3Second()
+        onView(withId(R.id.recycler_view_search_activity_search_matches))
+                .perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(1, click()))
+        delaySecond(10)
         onView(withId(R.id.menu_item_add_favorite_menu_detail_match))
                 .perform(click())
-        delay3Second()
+        delaySecond()
     }
 
-    private fun delay3Second() {
-        Thread.sleep(1000 * 3)
+    @Test
+    fun testRecyclerViewTeams() {
+        delaySecond()
+        onView(withId(R.id.navigation_teams))
+                .perform(click())
+        delaySecond()
+        onView(withId(R.id.recycler_view_team_fragment_teams))
+                .check(matches(isDisplayed()))
+        onView(withId(R.id.recycler_view_team_fragment_teams))
+                .perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(1, click()))
+        delaySecond()
+        onView(withText("Player"))
+                .perform(click())
+        onView(withId(R.id.recycler_view_player_detail_team))
+                .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(10))
+        onView(withId(R.id.menu_item_add_favorite_menu_detail_team))
+                .perform(click())
+        delaySecond()
+    }
+
+    @Test
+    fun testSearchingTeam() {
+        delaySecond()
+        onView(withId(R.id.navigation_teams))
+                .perform(click())
+        delaySecond()
+        onView(withId(R.id.menu_item_search_menu_matches))
+                .check(matches(isDisplayed()))
+        onView(withId(R.id.menu_item_search_menu_matches))
+                .perform(click())
+        onView(withId(R.id.edit_text_keyword_activity_search_teams))
+                .perform(clearText(), typeText("Arsenal"))
+        onView(withId(R.id.edit_text_keyword_activity_search_teams))
+                .perform(pressImeActionButton())
+        delaySecond(5)
+        onView(withId(R.id.recycler_view_search_activity_search_teams))
+                .check(matches(isDisplayed()))
+        onView(withId(R.id.recycler_view_search_activity_search_teams))
+                .perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(1, click()))
+        delaySecond()
+        onView(withId(R.id.menu_item_add_favorite_menu_detail_team))
+                .perform(click())
+        delaySecond()
+    }
+
+    @Test
+    fun testRecyclerViewFavorite() {
+        delaySecond()
+        onView(withId(R.id.navigation_favorites))
+                .perform(click())
+        delaySecond()
+        onView(withText("Favorite Team"))
+                .perform(click())
+        delaySecond()
+    }
+
+    private fun delaySecond(second: Long = 3) {
+        Thread.sleep(1000 * second)
     }
 
 }
