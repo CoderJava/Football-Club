@@ -1,27 +1,17 @@
 <!--
-  ~ Created by YSN Studio on 5/1/18 11:50 PM
+  ~ Created by YSN Studio on 5/4/18 5:53 AM
   ~ Copyright (c) 2018. All rights reserved.
   ~
-  ~ Last modified 5/1/18 9:46 PM
+  ~ Last modified 5/3/18 10:59 PM
   -->
 
 <resources>
     <string name="app_name">Football Club - Dicoding</string>
-    <string name="barcelona_detail">Didirikan pada tahun 1899 oleh sekelompok pemain Swiss, Inggris dan Catalan yang dipimpin oleh Joan Gamper, klub telah menjadi simbol budaya Catalan dan Catalinesme, yang mempunyai motto "Mes que un club".</string>
-    <string name="madrid_detail">Didirikan pada tahun 1902 sebagai Madrid Football Club, secara tradisional mengenakan kostum kandang putih. Kata Real (\"dari kerajaan\") Spanyol dan dianugerahkan ke klub oleh Raja Alfonso XIII pada tahun 1920 bersama-sama dengan mahkota kerajaan di lambang klub</string>
-    <string name="bayern_detail">Didirikan pada tahun 1900 oleh sebelas pemain sepak bolah yang dipimpin oleh Franz John. Meskipun Bayern memenangkan kejuaraan nasional pertamanya pada tahun 1932, klub itu tidak dipilih untuk Bundesliga pada awal tahun 1963</string>
-    <string name="city_detail">Didirikan pada tahun 1880 sebagai St. Mark\'s lalu pada tahun 1894 berubah nama menjadi Manchester City. Manchester City telah memenangi Liga Inggris sebanyak 4 kali, Piala FA 5 kali, Piala Liga Inggris 4 kali, dan Piala Winner Eropa 1 kali.</string>
-    <string name="mu_detail">Didirikan sebagai Newton Heath LYR Football Club pada tahun 1878, klub ini berganti nama menjadi Manchester United pada 1902 dan pindah ke Old Trafford pada tahun 1910</string>
-    <string name="chelsea_detail">Didirikan pada tahun 1905 dan kini berkompetisi di Liga Utama Inggris. Kesuksesan pertama Chelsea diraih saat meraih gelar juara liga pada tahun 1955. Beberapa gelar dari berbagai kompetisi juga berhasil diraih pada dekade 1960an, 1970an, 1990an, dan 2000an.</string>
-    <string name="acm_detail">Didirikan pada tahun 1899 dengan nama klub Kriket dan Sepak bola Milan oleh Alfred Edwards dan Herbert Klipin, seorang ekspatriat Inggris. Sebagai penghormatan terhadap asal usulnya, Milan tetap menggunakan ejaan bahasa Inggris nama kotanya (Milan) daripada menggunakan ejaan bahasa Italia Milano</string>
-    <string name="arsenal_detail">Didirikan pada tahun 1886 dengan nama Dial Square. Klub ini bermain di Liga Utama Inggris yang termasuk salah satu klub tersukses di sepak bola Inggris, yang telah memenangkan 13 gelar kasta utama Liga Inggris (10 pada era Divis Pertama dan 3 pada era Premier League) dan 13 gelar di Piala FA (Gelar paling banyak)</string>
     <string name="title_previous_match">Prev. Match</string>
     <string name="title_next_match">Next Match</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="vs">VS</string>
     <string name="example_date_schedule">Sen, 05 Mar 2018</string>
     <string name="goals">Goals</string>
-    <string name="_4_2_3_1">4-2-3-1</string>
     <string name="n_a">N/A</string>
     <string name="shots">Shots</string>
     <string name="lineups">Lineups</string>
@@ -46,6 +36,8 @@
     <string name="label_height">Height (m)</string>
     <string name="title_favorite_match">Favorite Match</string>
     <string name="title_favorite_team">Favorite Team</string>
+    <string name="brighton">Brighton</string>
+    <string name="arsenal">Arsenal</string>
     <string-array name="array_league">
         <item>English Premier League</item> <!--4328-->
         <item>English League championship</item> <!--4329-->
