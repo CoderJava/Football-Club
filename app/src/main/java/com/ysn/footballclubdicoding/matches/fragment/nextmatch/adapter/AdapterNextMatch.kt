@@ -1,8 +1,8 @@
 /*
- * Created by YSN Studio on 5/4/18 5:53 AM
+ * Created by YSN Studio on 5/4/18 9:37 AM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 5/3/18 10:50 PM
+ * Last modified 5/4/18 9:36 AM
  */
 
 package com.ysn.footballclubdicoding.matches.fragment.nextmatch.adapter
@@ -36,11 +36,11 @@ class AdapterNextMatch constructor(private var eventMatches: List<EventMatches>,
 
     override fun onBindViewHolder(holder: ViewHolderItemNextMatch, position: Int) {
         val event = eventMatches[position]
-        val timestampDateEvent = SimpleDateFormat("yyyy-MM-dd", Locale.US).parse(event.dateEvent)
-        val dateSchedule = SimpleDateFormat("EEE, dd MMM yyyy", Locale.US).format(timestampDateEvent)
-        val strTime = event.strTime.split("+")[0].substring(0, 5)
-        holder.textViewDateSchedule.text = dateSchedule
-        holder.textViewTimeSchedule.text = strTime
+        val dateTimeGmt = toGMTFormat(date = event.strDate, time = event.strTime)
+        val formatterDateTimeGmt = SimpleDateFormat("dd/MM/yyyy HH:mm")
+                .format(dateTimeGmt)
+        holder.textViewDateSchedule.text = formatterDateTimeGmt.split(" ")[0]
+        holder.textViewTimeSchedule.text = formatterDateTimeGmt.split(" ")[1]
         holder.textViewHomeClubName.text = event.strHomeTeam
         holder.textViewAwayClubName.text = event.strAwayTeam
     }
@@ -50,6 +50,13 @@ class AdapterNextMatch constructor(private var eventMatches: List<EventMatches>,
     fun refreshData(eventMatches: List<EventMatches>) {
         this.eventMatches = eventMatches
         notifyDataSetChanged()
+    }
+
+    fun toGMTFormat(date: String, time: String): Date? {
+        val formatter = SimpleDateFormat("dd/MM/yy HH:mm:ss")
+        formatter.timeZone = TimeZone.getTimeZone("UTC")
+        val dateTime = "$date $time"
+        return formatter.parse(dateTime)
     }
 
     inner class ViewHolderItemNextMatch constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -68,7 +75,11 @@ class AdapterNextMatch constructor(private var eventMatches: List<EventMatches>,
                 listenerAdapterMatch.onClickItemMatch(eventMatches = eventMatches[adapterPosition])
             }
             imageViewAddEventCalendarItemNextMatch.setOnClickListener {
-                listenerAdapterMatch.onAddMatchToCalendarEvent(eventMatches = eventMatches[adapterPosition])
+                val eventMatches = eventMatches[adapterPosition]
+                val dateTimeGmt = toGMTFormat(date = eventMatches.strDate, time = eventMatches.strTime)
+                val formatterDateTimeGmt = SimpleDateFormat("dd/MM/yyyy HH:mm")
+                        .format(dateTimeGmt)
+                listenerAdapterMatch.onAddMatchToCalendarEvent(eventMatches = eventMatches, formatterDateTimeGmt = formatterDateTimeGmt)
             }
         }
     }
@@ -77,7 +88,7 @@ class AdapterNextMatch constructor(private var eventMatches: List<EventMatches>,
 
         fun onClickItemMatch(eventMatches: EventMatches)
 
-        fun onAddMatchToCalendarEvent(eventMatches: EventMatches)
+        fun onAddMatchToCalendarEvent(eventMatches: EventMatches, formatterDateTimeGmt: String)
 
     }
 

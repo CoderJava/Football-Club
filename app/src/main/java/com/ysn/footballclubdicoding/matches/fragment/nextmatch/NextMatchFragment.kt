@@ -1,8 +1,8 @@
 /*
- * Created by YSN Studio on 5/4/18 5:53 AM
+ * Created by YSN Studio on 5/4/18 9:37 AM
  * Copyright (c) 2018. All rights reserved.
  *
- * Last modified 5/3/18 10:59 PM
+ * Last modified 5/4/18 9:36 AM
  */
 
 package com.ysn.footballclubdicoding.matches.fragment.nextmatch
@@ -75,12 +75,10 @@ class NextMatchFragment : Fragment(), NextMatchView {
                 doOnClickItemMatch(eventMatches = eventMatches)
             }
 
-            override fun onAddMatchToCalendarEvent(eventMatches: EventMatches) {
+            override fun onAddMatchToCalendarEvent(eventMatches: EventMatches, formatterDateTimeGmt: String) {
                 val calendarEvent = Calendar.getInstance()
-                val strDate = eventMatches.strDate
-                val strTime = eventMatches.strTime.split("+")[0]
-                val dateEvent = SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.US)
-                        .parse("$strDate $strTime")
+                val dateEvent = SimpleDateFormat("dd/MM/yyyy HH:mm")
+                        .parse(formatterDateTimeGmt)
                 calendarEvent.time = dateEvent
                 val intentCalendarEvent = Intent(Intent.ACTION_EDIT)
                 intentCalendarEvent.type = "vnd.android.cursor.item/event"
